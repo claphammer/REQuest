@@ -8,5 +8,6 @@ Library/*
 Temp
 *.pidb
 Build
+Build/*
 Editor
 Editor/*
