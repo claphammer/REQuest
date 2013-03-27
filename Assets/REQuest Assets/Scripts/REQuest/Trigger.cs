@@ -5,6 +5,7 @@ public class Trigger : MonoBehaviour {
 	
 public static int trig1 = 0; //When changed to 1 sends message to inventory to activate object
 public bool messageDelay = false; //true activates message popup coroutine. false means trigger is idle
+
 	
 	void Update(){
 		 rigidbody.WakeUp();
