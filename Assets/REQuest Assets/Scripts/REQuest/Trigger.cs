@@ -5,6 +5,7 @@ public class Trigger : MonoBehaviour {
 	
 public static int trig1 = 0; //When changed to 1 sends message to inventory to activate object
 public bool messageDelay = false; //true activates message popup coroutine. false means trigger is idle
+public GameObject playSound;
 
 	
 	void Update(){
@@ -16,6 +17,7 @@ public bool messageDelay = false; //true activates message popup coroutine. fals
 		if(trig1 == 0){
 		trig1 = 1;
 		Debug.Log("Triggered "+trig1);
+			playSound.SetActiveRecursively (true);
 		StartCoroutine(Wait(10.0F));
 		}else{
 		trig1 = 1;
@@ -30,7 +32,7 @@ public bool messageDelay = false; //true activates message popup coroutine. fals
 	//GUI message controls.  Alter GUI information from on GUI - valid until GUI styles are implemented
 	void OnGUI () {
 		if (messageDelay == true){
-			GUI.Box(new Rect(Screen.width/2,Screen.height/2, 250, 25), "New Item Acquired");
+			GUI.Box(new Rect(Screen.width/2,Screen.height/2, 250, 25), "New Item Acquired! Check your Inventory.");
 		//GUI.Box(new Rect(Screen.width/2,Screen.height/2,250,100), "New Item Acquired", style);
 		}
 	}
