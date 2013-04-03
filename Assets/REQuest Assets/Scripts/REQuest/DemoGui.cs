@@ -10,8 +10,8 @@ using System.Collections;
 public class DemoGui : MonoBehaviour 
 {
 	private GameController game;
-	private Rect winRect1 = new Rect(10f, 10f, 180f, 80f);
-	private Rect winRect2 = new Rect(10f, 100f, 180f, 80f);
+	private Rect winRect1 = new Rect(10f, 10f, 200f, 80f);
+	private Rect winRect2 = new Rect(10f, 200f, 200f, 80f);
 		
 	private Inventory inv;
 
@@ -23,14 +23,18 @@ public class DemoGui : MonoBehaviour
 	
     void OnGUI() 
 	{
-        winRect1 = GUI.Window(0, winRect1, DoMyWindow1, "Misc Info");
+        winRect1 = GUILayout.Window(0, winRect1, DoMyWindow1, "Instructions");
         winRect2 = GUILayout.Window(1, winRect2, DoMyWindow2, "RE-Quest Test GUI");
     }
 	
     void DoMyWindow1(int windowID)
 	{
-		GUILayout.Label(string.Format("Click/tap a tile to move."));
+		GUILayout.Label(string.Format("Move the Player along path to red target."));
+		GUILayout.Label(string.Format("Click a 'lit' tile to move."));
 		GUILayout.Label(string.Format("<cntl>+click to rotate camera"));
+		GUILayout.Label(string.Format("When Player is out of moves:"));
+		GUILayout.Label(string.Format("  1) roll dice"));
+		GUILayout.Label(string.Format("  2) reselect player"));
     }
 	
 	void DoMyWindow2(int windowID)

@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour {
 		
 	public Texture aTexture;  //First texture - Shadow
 	public Texture bTexture;  //Second texture - Color
-	private Rect winRect3 = new Rect(210, 10, 200, 200);
+	private Rect winRect3 = new Rect(220, 10, 200, 200);
 	
 	public bool setWindow1 = false;  //Activate window(true) or deactivate window(false)
 
