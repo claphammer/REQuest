@@ -18,9 +18,7 @@ public class NaviUnit : MonoBehaviour
 	public bool adjustNormals = false; 			// if this is true then adjustToCollider will be performed too
 	public LayerMask adjustmentLayerMask = 0;   // "Terrain" the mapnav is adjusted to
 	public bool usingSameTimeMovement = false; 	// set this to false if your units will NOT be moving at the same
-	
-	public bool isIdle = false;
-	
+
 	#endregion
 	// ====================================================================================================================
 	#region vars
@@ -205,7 +203,7 @@ Debug.Log("I am ALIVE!" + " Player spawned");
 	gameObject.animation.Play("idle",PlayMode.StopAll);
 Debug.Log("I am Idle...");
 		
-		isIdle = true;
+		
 		
 		OnMovementStopped();
 	}

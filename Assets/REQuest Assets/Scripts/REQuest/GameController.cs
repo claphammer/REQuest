@@ -18,8 +18,7 @@ public class GameController : TMNController
 	public TileNode playerSpawnPoint;			// the tile where the unit will start
 	public bool hideSelectorOnMove = true;		// hide the selection marker when a unit moves?
 	public bool hideMarkersOnMove = true;		// hide the node markers when a unit moves?
-	
-	public bool test = false;
+
 
 	#endregion
 	// ====================================================================================================================
@@ -30,7 +29,7 @@ public class GameController : TMNController
 	private TileNode hoverNode = null;			// that that mouse is hovering over
 	private TileNode prevNode = null;			// helper during movement
 	
-	public bool useTurns = false;				// allow "max moves" to be broken down into sub-moves without a reset
+	public bool useTurns = true;				// allow "max moves" to be broken down into sub-moves without a reset
 	public Unit selectedUnit = null;			// currently selected unit
 	public bool allowInput { get; set; }
 	
@@ -51,7 +50,7 @@ public class GameController : TMNController
 		base.Start();
 		allowInput = false;
 		state = State.Init;
-		
+		//TilesInvisible();
 	}
 	
 	private void SpawnUnit()
@@ -72,6 +71,7 @@ public class GameController : TMNController
 		// Select Unit (camera will auto-bind to the selected unit)
 		this.OnNaviUnitClick(unit.gameObject);
 		allowInput = true; // allow input again
+		//Debug.Log("Selected Unit is: " + selectedUnit);
 	}
 
 	#endregion
@@ -105,22 +105,34 @@ Debug.Log("State should be INIT.  Survey Says: " + state + " and about to spawn 
 	#endregion
 	// ====================================================================================================================
 	#region pub
-	
+
 	public void ChangeTurn()  //cycle turn moves even for single player
 	{	
-		//Check if currMoves = 0. If not, do roll die and updare
-		if(selectedUnit.currMoves != 0){
-			selectedUnit.currMoves = selectedUnit.currMoves;
-		}else{
 		// Roll Dice
 		selectedUnit.maxMoves = Random.Range(1,6); //Nate's Dice call
 		
 		// Reset call
 		selectedUnit.Reset(); // Reset selected Unit's CurrMoves to match new MaxMoves value
-		}
+		
+		// Unselect the selected unit
+		OnClearNaviUnitSelection(null);  //We need to be able to unselect and reselect the unitat various times.
+		
+		
 	}
-
-	
+	/*
+	public void TilesInvisible() //set the projectors to off
+	{
+		Debug.Log("Turning off projectors");
+		
+	foreach (TileNode n in map.nodes)
+		{
+			//n.collider.enabled = false;
+			n.projector.enabled = false;
+			//Hide();
+		}
+		
+	}*/
+		 
 	#endregion
 	// ====================================================================================================================
 	#region input handlers - click tile
@@ -190,18 +202,18 @@ Debug.Log("selectedUnit is... " + selectedUnit);
 		base.OnNaviUnitClick(go);
 
 		Unit unit = go.GetComponent<Unit>();
-		
+
 		// jump camera to the unit that was clicked on (is selected)
 		camMover.Follow(go.transform);
 
 		// -----------------------------------------------------------------------
 		// using turns sample?
-		if (!useTurns)
+		if (useTurns)
 		{
 			// is active player's unit that was clicked on?
 			//if (unit.playerSide == (currPlayerTurn + 1))
 			//{
-			selectedUnit = go.GetComponent<Unit>();
+				selectedUnit = go.GetComponent<Unit>();
 			Debug.Log("Selected Unit is: " + selectedUnit);
 				// move selector to the clicked unit to indicate it's selection
 				selectionMarker.Show(go.transform);
@@ -209,8 +221,8 @@ Debug.Log("selectedUnit is... " + selectedUnit);
 				// show the nodes that this unit can move to
 				selectedUnit.node.ShowNeighbours(selectedUnit.currMoves, selectedUnit.tileLevel, true, true);
 
-		}	
-		
+		}
+
 		// -----------------------------------------------------------------------
 		// not using turns sample
 		else
@@ -228,9 +240,51 @@ Debug.Log("selectedUnit is... " + selectedUnit);
 				selectedUnit.node.ShowNeighbours(selectedUnit.currMoves, selectedUnit.tileLevel, true, true);
 			}
 		}
-
 	}
 
+	protected override void OnClearNaviUnitSelection(GameObject clickedAnotherUnit)
+	{
+		base.OnClearNaviUnitSelection(clickedAnotherUnit);
+		bool canClear = false; //true; **************Changed for Demo 1*************
+
+		// if clicked on another unit i first need to check if can clear
+		if (clickedAnotherUnit != null && selectedUnit != null)
+		{
+		//	Unit unit = clickedAnotherUnit.GetComponent<Unit>();
+			if (useTurns)
+			{
+				// Don't clear if opponent unit was cleared and using Turns example.
+				//if (unit.playerSide != selectedUnit.playerSide) canClear = false;
+			}
+
+			else
+			{
+				// in this case, only clear if can't attack the newly clicked unit
+				//if (selectedUnit.CanAttack(unit)) canClear = false;
+			}
+		}
+
+		// -----------------------------------------------------------------------
+		if (canClear)
+		{
+			// hide the selection marker
+			selectionMarker.Hide();
+
+			if (selectedUnit != null)
+			{
+				// hide the nodes that where shown when unit was clicked, this way I only touch the nodes that I kow I activated
+				// note that map.DisableAllTileNodes() could also be used by would go through all nodes
+				selectedUnit.node.ShowNeighbours(((Unit)selectedUnit).maxMoves, false);
+				selectedUnit = null;
+			}
+			else
+			{
+				// just to be sure, since OnClearNaviUnitSelection() was called while there was no selected unit afterall
+				map.ShowAllTileNodes(false);
+			}
+		}
+	}
+	
 	
 	
 	#endregion
@@ -257,12 +311,11 @@ Debug.Log("selectedUnit is... " + selectedUnit);
 			}
 
 			// do a fake click on the unit to "select" it again
-			//this.OnNaviUnitClick(unit.gameObject);
+			this.OnNaviUnitClick(unit.gameObject);
 			allowInput = true; // allow input again
 		}
 	}
 
-	}
-
 	#endregion
 	// ====================================================================================================================
+}
