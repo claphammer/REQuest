@@ -42,8 +42,6 @@ public abstract class TMNController : MonoBehaviour
 
 		_rayMask = (1<<map.tilesLayer | 1<<this.unitsLayer);
 		
-		//"Turn off all Tile nodes" - doesnt fully work.
-		//map.ShowAllTileNodes(false);
 	}
 	/*
 	void FixedUpdate(){
@@ -60,8 +58,6 @@ public abstract class TMNController : MonoBehaviour
 		// only continue if left-mouse-click detected or if a unit is currently selected
 		if (!Input.GetMouseButtonUp(0) && _selectedUnitGo == null) return;
 
-		bool unselect = (Input.GetMouseButtonUp(0) ? true : false);
-
 		Ray ray = rayCam.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 500f, _rayMask))
@@ -71,7 +67,6 @@ public abstract class TMNController : MonoBehaviour
 			{
 				if (Input.GetMouseButtonUp(0))
 				{	// mouse-click/touch detected
-					unselect = false;
 					OnTileNodeClick(hit.collider.gameObject);
 				}
 				else
@@ -89,7 +84,6 @@ public abstract class TMNController : MonoBehaviour
 			{
 				if (Input.GetMouseButtonUp(0))
 				{	// mouse-click/touch on the unit
-					unselect = false;
 
 					// first clear any previous selection
 					if (_selectedUnitGo != null)
@@ -108,11 +102,6 @@ public abstract class TMNController : MonoBehaviour
 			OnTileNodeHover(null);
 		}		
 
-		if (unselect)
-		{
-			OnTileNodeHover(null);
-			OnClearNaviUnitSelection(null);
-		}
 	}
 
 	// ====================================================================================================================

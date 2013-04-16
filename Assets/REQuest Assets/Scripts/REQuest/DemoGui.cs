@@ -10,20 +10,25 @@ using System.Collections;
 public class DemoGui : MonoBehaviour 
 {
 	private GameController game;
+	private Inventory inv;
+	private QuestLog quest;
+	
 	private Rect winRect1 = new Rect(10f, 10f, 200f, 80f);
 	private Rect winRect2 = new Rect(10f, 200f, 200f, 80f);
-		
-	private Inventory inv;
+	
+	static public bool test = false;
 
 	void Start()
 	{
 		game = gameObject.GetComponent<GameController>();
 		inv = gameObject.GetComponent<Inventory>();
+		quest = gameObject.GetComponent<QuestLog>();
 	}
 	
     void OnGUI() 
 	{
         winRect1 = GUILayout.Window(0, winRect1, DoMyWindow1, "Instructions");
+        winRect1 = GUILayout.Window(3, winRect1, DoMyWindow1, "Misc Info");
         winRect2 = GUILayout.Window(1, winRect2, DoMyWindow2, "RE-Quest Test GUI");
     }
 	
@@ -54,14 +59,17 @@ public class DemoGui : MonoBehaviour
 			//Slot 2a: Toggle Inventory Window
 			GUILayout.Space(10f);
 			inv.setWindow1 = GUILayout.Toggle(inv.setWindow1, "Inventory toggle");
-			
+						
+			//Slot 2: Use Turns Checkbox
+			GUILayout.Space(10f);
+			quest.setWindow1 = GUILayout.Toggle(quest.setWindow1, "Quest Log");
 			
 			//Slot 2: Use Turns Checkbox
 			GUILayout.Space(10f);
 			game.useTurns = GUILayout.Toggle(game.useTurns, "USE TURNS");
 				
-			if (game.useTurns)
-			{
+			//if (game.useTurns)
+			//{
 			
 			//Slot 3: Moves Left (currMoves) Display
 				GUILayout.Space(10f);
@@ -72,9 +80,11 @@ public class DemoGui : MonoBehaviour
 				if (game.allowInput)
 				{
 					GUILayout.Space(10f);
-					if (GUILayout.Button("Reset Turn / Roll Die")) game.ChangeTurn();
+					if (GUILayout.Button("Reset Turn / Roll Die")){ 
+					game.ChangeTurn();
+					}
 				}
-			}
+			//}
 		}
 	}
 }
