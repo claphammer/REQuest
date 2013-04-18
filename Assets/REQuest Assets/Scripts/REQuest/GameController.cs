@@ -34,6 +34,8 @@ public class GameController : TMNController
 	public Unit selectedUnit = null;			// currently selected unit
 	public bool allowInput { get; set; }
 	
+	public int turnNumber = 0;
+	
 	// * unused list stuff - can be refactored for inventory
 	//private List<Unit>[] units = {
 	//	new List<Unit>(),						// player 1's units
@@ -50,8 +52,8 @@ public class GameController : TMNController
 	{
 		base.Start();
 		allowInput = false;
-		state = State.Init;
-		
+		state = State.Init;		
+	
 	}
 	
 	private void SpawnUnit()
@@ -79,7 +81,7 @@ public class GameController : TMNController
 	#region update/input
 
 	public void Update()
-	{
+	{		
 		//Find the spawn location
 		TileNode node = playerSpawnPoint;
 		
@@ -95,29 +97,42 @@ public class GameController : TMNController
 
 		else if (state == State.Init)
 		{
-Debug.Log("State should be INIT.  Survey Says: " + state + " and about to spawn the player at: " + node);
+			Debug.Log("State should be INIT.  Survey Says: " + state + " and about to spawn the player at: " + node);
 			state = State.Running;
 			SpawnUnit(); // Call SpawnUnit function
 			allowInput = true;
 		}
-	}
+		
+		if(MovementTrigger.trig2 == 0 && turnNumber == 0){
+			selectedUnit.maxMoves = 100;
+			selectedUnit.currMoves = 12;
+			turnNumber++;
+		}
+		if(MovementTrigger.trig2 == 1 && turnNumber == 1){
+			selectedUnit.currMoves = 0;
+			turnNumber++;
+		}
+}
 
 	#endregion
 	// ====================================================================================================================
 	#region pub
 	
-	public void ChangeTurn()  //cycle turn moves even for single player
+	public void ChangeTurn(bool changeTurn)  //cycle turn moves even for single player
 	{	
-		//Check if currMoves = 0. If not, do roll die and updare
-		if(selectedUnit.currMoves != 0){
-			selectedUnit.currMoves = selectedUnit.currMoves;
-		}else{
-		// Roll Dice
-		selectedUnit.maxMoves = Random.Range(1,6); //Nate's Dice call
+		if(turnNumber > 0){
+			//Check if currMoves = 0. If not, do roll die and updare
+			if(selectedUnit.currMoves != 0){
+				selectedUnit.currMoves = selectedUnit.currMoves;
+			}else{
+			// Roll Dice
+			selectedUnit.maxMoves = Random.Range(1,6); //Nate's Dice call
 		
-		// Reset call
-		selectedUnit.Reset(); // Reset selected Unit's CurrMoves to match new MaxMoves value
+			// Reset call
+			selectedUnit.Reset(); // Reset selected Unit's CurrMoves to match new MaxMoves value
+			}
 		}
+		
 	}
 
 	
@@ -195,24 +210,25 @@ Debug.Log("selectedUnit is... " + selectedUnit);
 		camMover.Follow(go.transform);
 
 		// -----------------------------------------------------------------------
-		// using turns sample?
-		if (!useTurns)
+		// not using turns sample?
+		if (useTurns)
 		{
 			// is active player's unit that was clicked on?
 			//if (unit.playerSide == (currPlayerTurn + 1))
 			//{
-			selectedUnit = go.GetComponent<Unit>();
+				selectedUnit = go.GetComponent<Unit>();
 			Debug.Log("Selected Unit is: " + selectedUnit);
 				// move selector to the clicked unit to indicate it's selection
 				selectionMarker.Show(go.transform);
-			
+
 				// show the nodes that this unit can move to
 				selectedUnit.node.ShowNeighbours(selectedUnit.currMoves, selectedUnit.tileLevel, true, true);
 
-		}	
+		}
+
 		
 		// -----------------------------------------------------------------------
-		// not using turns sample
+		// using turns sample
 		else
 		{
 			bool changeUnit = true;

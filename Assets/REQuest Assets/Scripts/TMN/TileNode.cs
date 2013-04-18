@@ -89,20 +89,20 @@ public class TileNode: MonoBehaviour
 	void Start()
 	{
 		units = new List<NaviUnit>();
-		
+
 		linkOnOffSwitch = gameObject.GetComponent<TNELinksOnOffSwitch>();
 		movesMod = gameObject.GetComponent<TNEMovementModifier>();
 
 		if (!projector) projector = gameObject.GetComponent<Projector>();
-		
 
-		
+
+
 		if (!projector && transform.childCount > 0)
 		{
 			for (int i = 0; i < transform.childCount; i++)
 			{
 				projector = transform.GetChild(i).GetComponent<Projector>();
-				
+
 				if (projector) break;
 			}
 		}
@@ -150,6 +150,9 @@ public class TileNode: MonoBehaviour
 		if (projector)
 		{
 			projector.enabled = doShow;
+			if(projector.enabled == true){
+			//Debug.Log("Tile Node = "+this);	
+			}
 		}
 	}
 
@@ -205,7 +208,7 @@ public class TileNode: MonoBehaviour
 	}
 
 	/// <summary>
-	/// Checks if the tergate node is in radius range from this node
+	/// Checks if the target node is in radius range from this node
 	/// </summary>
 	public bool IsInRange(TileNode targetNode, int radius)
 	{
@@ -333,7 +336,7 @@ public class TileNode: MonoBehaviour
 			linkOnOffSwitch.SetLinkStateWith(withNode, on);
 			needToAdd = false;
 		}
-		
+
 		// check if neighbour might carry a link back to this node, and update
 		if (withNode.linkOnOffSwitch != null)
 		{
@@ -424,6 +427,7 @@ public class TileNode: MonoBehaviour
 					// also check if another unit is occupying the same layer, which makes this node invalid
 					if (node.GetUnitInLevel(validNodesLayer)) continue;
 				}
+				
 			}
 
 			// check if movement mod applies
@@ -499,7 +503,7 @@ public class TileNode: MonoBehaviour
 	{
 		this._ShowNeighboursRecursive_Helper = radius;
 		closeList.Add(this);
-		
+
 		radius--; if (radius < 0) return;
 		int r = radius;
 

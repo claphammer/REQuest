@@ -11,7 +11,14 @@ public class QuestLog : MonoBehaviour {
 	
 	//Controls contents in window
 	void DoWindow4(int windowID) {
-		GUILayout.Label(string.Format("Max moves (Roll) this turn: "));
+		/*if(Trigger.trig1 == 1){
+			GUILayout.Label(string.Format("INCOMPLETE: Need to collect the dice and go to the village gate."));
+		}*/
+		if(Trigger.trig1 == 1 && VillageDoor.isOpen == true){
+			GUILayout.Label(string.Format("COMPLETED: Need to collect the dice and go to the village gate."));
+		}else{
+			GUILayout.Label(string.Format("INCOMPLETE: Need to collect the dice and go to the village gate."));	
+		}
 	}
 	
 	//GUI to define the window parameters

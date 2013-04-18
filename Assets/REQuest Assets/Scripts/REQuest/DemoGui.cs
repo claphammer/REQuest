@@ -81,7 +81,7 @@ public class DemoGui : MonoBehaviour
 				{
 					GUILayout.Space(10f);
 					if (GUILayout.Button("Reset Turn / Roll Die")){ 
-					game.ChangeTurn();
+					game.ChangeTurn(true);
 					}
 				}
 			//}
