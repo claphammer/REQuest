@@ -20,8 +20,12 @@ public class CameraOrbit : MonoBehaviour
     public float xSpeed = 250.0f;
     public float ySpeed = 120.0f;
 
+	public bool allowXRot = true;
+	public float xMinLimit = 360f;
+	public float xMaxLimit = 80f;
+    
 	public bool allowYTilt = true;
-    public float yMinLimit = 10f;
+	public float yMinLimit = 10f;
     public float yMaxLimit = 80f;
 
     private float x = 0.0f;
@@ -59,7 +63,11 @@ public class CameraOrbit : MonoBehaviour
 			// or player can use the left mouse button while holding Ctr
 			if (Input.GetMouseButton(1) || (Input.GetMouseButton(0) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) ))
             {
-                targetX += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
+                if (allowXRot)
+				{
+					targetX -= Input.GetAxis("Mouse X") * xSpeed * 0.02f;
+					targetX = ClampAngle(targetX, xMinLimit,xMaxLimit);
+				}
 				if (allowYTilt)
 				{
 					targetY -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;

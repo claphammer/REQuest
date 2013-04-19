@@ -15,7 +15,7 @@ public class QuestLog : MonoBehaviour {
 			GUILayout.Label(string.Format("INCOMPLETE: Need to collect the dice and go to the village gate."));
 		}*/
 		if(Trigger.trig1 == 1 && VillageDoor.isOpen == true){
-			GUILayout.Label(string.Format("COMPLETED: Need to collect the dice and go to the village gate."));
+			GUILayout.Label(string.Format("COMPLETED: Opened the gate to the first village."));
 		}else{
 			GUILayout.Label(string.Format("INCOMPLETE: Need to collect the dice and go to the village gate."));	
 		}
