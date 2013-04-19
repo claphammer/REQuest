@@ -130,6 +130,8 @@ public class GameController : TMNController
 		
 			// Reset call
 			selectedUnit.Reset(); // Reset selected Unit's CurrMoves to match new MaxMoves value
+				
+			turnNumber++;
 			}
 		}
 		
