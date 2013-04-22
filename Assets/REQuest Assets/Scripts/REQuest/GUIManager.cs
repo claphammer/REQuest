@@ -4,7 +4,7 @@ public class GUIManager : MonoBehaviour
 {
 	public RenderTexture MiniMapTexture;
 	public Material MiniMapMaterial;
-	public bool MMisDrawn = true; //allow minimap to be taggled from an external button
+	public bool MMisDrawn = true; //allow minimap to be toggled from an external button
 	
 	private float offset;
 	
