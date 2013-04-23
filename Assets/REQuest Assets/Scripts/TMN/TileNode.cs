@@ -150,6 +150,12 @@ public class TileNode: MonoBehaviour
 		if (projector)
 		{
 			projector.enabled = doShow;
+			/* What is enabled?
+			if(projector.enabled == true)
+			{
+            	Debug.Log("Active Nodes"+this);        
+            }
+			*/
 		}
 	}
 

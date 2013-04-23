@@ -46,12 +46,12 @@
   <ItemGroup>
      <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogCast.js" />
      <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogController.js" />
+     <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogLocalization.js" />
      <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogScenes.js" />
      <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogScreen.js" />
      <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogUI.js" />
-     <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\Localization.js" />
      <None Include="Assets\REQuest Assets\Shaders\Projector Multiply.shader" />
-     <None Include="Assets\BartleTest\Resources\UI\Custom Fonts\300trojans\300trojans.txt" />
+     <None Include="Assets\REQuest Assets\Sources\UI\Custom Fonts\300trojans\300trojans.txt" />
      <None Include="Assets\REQuest Assets\Shaders\Projector Light.shader" />
      <None Include="Assets\REQuest Assets\Shaders\FX-Water Simple.shader" />
      <None Include="Assets\REQuest Assets\Skybox\README.txt" />

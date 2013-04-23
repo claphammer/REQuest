@@ -57,7 +57,6 @@ public class GameController : TMNController
 	{
 		//Find the inspector referenced spawn location and name it "node"
 		TileNode node = playerSpawnPoint;
-				Debug.Log(node);
 		
 		//set "node" specifically to node 478
 		node = map[478];
@@ -81,7 +80,7 @@ public class GameController : TMNController
 	public void Update()
 	{
 		//Find the spawn location
-		TileNode node = playerSpawnPoint;
+		//TileNode node = playerSpawnPoint;
 		
 		if (state == State.Running)
 		{
@@ -95,7 +94,6 @@ public class GameController : TMNController
 
 		else if (state == State.Init)
 		{
-Debug.Log("State should be INIT.  Survey Says: " + state + " and about to spawn the player at: " + node);
 			state = State.Running;
 			SpawnUnit(); // Call SpawnUnit function
 			allowInput = true;

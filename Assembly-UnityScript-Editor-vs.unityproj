@@ -50,16 +50,13 @@
      <Compile Include="Assets\Editor\Black Zombie\Dialogs\Editor\DialogScenesEditor.js" />
      <Compile Include="Assets\Editor\Black Zombie\Dialogs\Editor\DialogScreenEditor.js" />
      <None Include="Assets\REQuest Assets\Shaders\Projector Multiply.shader" />
-     <None Include="Assets\BartleTest\Resources\UI\Custom Fonts\300trojans\300trojans.txt" />
+     <None Include="Assets\REQuest Assets\Sources\UI\Custom Fonts\300trojans\300trojans.txt" />
      <None Include="Assets\REQuest Assets\Shaders\Projector Light.shader" />
      <None Include="Assets\REQuest Assets\Shaders\FX-Water Simple.shader" />
      <None Include="Assets\REQuest Assets\Skybox\README.txt" />
      <None Include="Assets\REQuest Assets\Shaders\MaskShader.shader" />
  <Reference Include="Library\ScriptAssemblies\Assembly-UnityScript-firstpass">
  <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
- </Reference>
- <Reference Include="Library\ScriptAssemblies\Assembly-UnityScript">
- <HintPath>Library\ScriptAssemblies\Assembly-UnityScript.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

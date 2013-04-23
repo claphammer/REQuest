@@ -18,6 +18,9 @@ public class NaviUnit : MonoBehaviour
 	public bool adjustNormals = false; 			// if this is true then adjustToCollider will be performed too
 	public LayerMask adjustmentLayerMask = 0;   // "Terrain" the mapnav is adjusted to
 	public bool usingSameTimeMovement = false; 	// set this to false if your units will NOT be moving at the same
+	
+	//will
+	public GameObject BartleStart;
 
 	#endregion
 	// ====================================================================================================================
