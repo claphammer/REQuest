@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{DB5601FA-2AA1-A467-4243-A9A9A97A55FA}</ProjectGuid>
+	<ProjectGuid>{A8CEF44B-40AF-2713-F39B-504649E1BED9}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -18,7 +18,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_STANDALONE_OSX;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;ENABLE_SUBSTANCE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_WEBPLAYER;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;ENABLE_SUBSTANCE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -44,22 +44,23 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Tile Based Map and Nav\Editor\ExportSplat.js" />
-     <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />
-     <None Include="Assets\Standard Assets\Projectors\Sources\Shaders\Projector Multiply.shader" />
-     <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
-     <None Include="Assets\Standard Assets\Projectors\Sources\Shaders\Projector Light.shader" />
-     <None Include="Assets\Standard Assets\Water (Basic)\Sources\Shaders\FX-Water Simple.shader" />
-     <None Include="Assets\Standard Assets\sky5X\README.txt" />
+     <Compile Include="Assets\Editor\Black Zombie\Dialogs\Editor\DialogCastEditor.js" />
+     <Compile Include="Assets\Editor\Black Zombie\Dialogs\Editor\DialogControllerEditor.js" />
+     <Compile Include="Assets\Editor\Black Zombie\Dialogs\Editor\DialogMenuShortcutsEditor.js" />
+     <Compile Include="Assets\Editor\Black Zombie\Dialogs\Editor\DialogScenesEditor.js" />
+     <Compile Include="Assets\Editor\Black Zombie\Dialogs\Editor\DialogScreenEditor.js" />
+     <None Include="Assets\REQuest Assets\Shaders\Projector Multiply.shader" />
+     <None Include="Assets\REQuest Assets\Sources\UI\Custom Fonts\300trojans\300trojans.txt" />
+     <None Include="Assets\REQuest Assets\Shaders\Projector Light.shader" />
+     <None Include="Assets\REQuest Assets\Shaders\FX-Water Simple.shader" />
+     <None Include="Assets\REQuest Assets\Skybox\README.txt" />
      <None Include="Assets\REQuest Assets\Shaders\MaskShader.shader" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{8ABD9F82-60FE-0EDF-95D3-AEE56DEFA4A5}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-UnityScript-firstpass.unityproj">
-      <Project>{D4D737FC-5889-0D4E-5D3A-F825A5AEF6DF}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
+      <Project>{209255B2-F753-0FC2-C9A4-571597EEF2DA}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{708EDC57-EA48-B509-7DFD-66E4A570440B}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+      <Project>{E4452FFD-5F75-F8C1-EC1D-E81619B24675}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

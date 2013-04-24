@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{1639DDB6-2008-1C7A-5978-218ED577106C}</ProjectGuid>
+	<ProjectGuid>{209255B2-F753-0FC2-C9A4-571597EEF2DA}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -18,7 +18,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_IOS;UNITY_IPHONE;ENABLE_GENERICS;ENABLE_TERRAIN;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_3_5_7;UNITY_3_5;UNITY_EDITOR;ENABLE_PROFILER;UNITY_WEBPLAYER;ENABLE_GENERICS;ENABLE_DUCK_TYPING;ENABLE_TERRAIN;ENABLE_MOVIES;ENABLE_WEBCAM;ENABLE_MICROPHONE;ENABLE_NETWORK;ENABLE_CLOTH;ENABLE_WWW;ENABLE_SUBSTANCE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -44,11 +44,14 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Standard Assets\Scripts\Camera Scripts\MouseOrbit.js" />
-     <Compile Include="Assets\Standard Assets\Scripts\Camera Scripts\SmoothFollow.js" />
-     <Compile Include="Assets\Standard Assets\Scripts\Camera Scripts\SmoothLookAt.js" />
-     <Compile Include="Assets\Standard Assets\Scripts\General Scripts\DragRigidbody.js" />
+     <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogCast.js" />
+     <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogController.js" />
+     <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogLocalization.js" />
+     <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogScenes.js" />
+     <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogScreen.js" />
+     <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogUI.js" />
      <None Include="Assets\REQuest Assets\Shaders\Projector Multiply.shader" />
+     <None Include="Assets\REQuest Assets\Sources\UI\Custom Fonts\300trojans\300trojans.txt" />
      <None Include="Assets\REQuest Assets\Shaders\Projector Light.shader" />
      <None Include="Assets\REQuest Assets\Shaders\FX-Water Simple.shader" />
      <None Include="Assets\REQuest Assets\Skybox\README.txt" />
