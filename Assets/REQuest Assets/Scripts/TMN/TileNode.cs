@@ -427,7 +427,7 @@ public class TileNode: MonoBehaviour
 					// also check if another unit is occupying the same layer, which makes this node invalid
 					if (node.GetUnitInLevel(validNodesLayer)) continue;
 				}
-				
+
 			}
 
 			// check if movement mod applies
