@@ -4,31 +4,38 @@ using System.Collections.Generic;
 public class _BartleManager : MonoBehaviour {
 	
 public List<GameObject> bQuestions = new List<GameObject>();	//create List of all Bartle Question dialog prefabs thru inspector
-private int QuestionsAsked = 0; 								//variable to track how many questions have been asked
+private int questionsAsked = 0; 								//variable to track how many questions have been asked
 private int currQuestion;										//variable to track current question pulled from the the array
-	
-	void QuestionPicker () 
+private int turn;
+			
+	public void QuestionPicker() 
 	{
 		currQuestion = (int)Random.Range(0, bQuestions.Count);
-		print(bQuestions.Count);
+		print("Total Questions Left in List: " + bQuestions.Count);
 		Instantiate(bQuestions[currQuestion]);
-		QuestionsAsked = (QuestionsAsked + 1);
-		bQuestions.RemoveAt(currQuestion);
-
-	
+		questionsAsked = (questionsAsked + 1);
+		bQuestions.RemoveAt(currQuestion);	
+		print ("Questions Asked:" + questionsAsked);
 	}
 	
 
-	void Update ()
+/*	void Update ()
 	{
-		// add if statement to check if a dialog is active...
-		if (DialogUI.ended && Input.GetKeyDown(KeyCode.Space)) //ignore Mono error about DialogUI not existing
-        {
+		turn = ((int)GameController.turnNumber);
+		print("Turn Number is: " + turn);
+		
+		if (turn != 0 && (turn & 1) == 0)
+		{
+			print(turn + " is EVEN...continue to random Bartle Test Question");
 			QuestionPicker();
-        }
-
+		}
+		else
+		{
+			print(turn + " is ODD.  Stop checker.");
+		}
 	}
-	
+*/
+}
 	
 	
 
@@ -41,5 +48,4 @@ private int currQuestion;										//variable to track current question pulled f
     return theCard;
 }
 */
-	
-}
+

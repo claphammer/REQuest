@@ -1,7 +1,7 @@
 // ====================================================================================================================
 // Test Game Controller Script
 // RE-Quest  2013
-// Will Clapham & Nate Josway
+// Will Clapham & Nate Joswa12y
 // ====================================================================================================================
 
 using UnityEngine;
@@ -20,6 +20,7 @@ public class GameController : TMNController
 	public bool hideMarkersOnMove = true;		// hide the node markers when a unit moves?
 	
 	public bool test = false;
+	public _BartleManager script;
 
 	#endregion
 	// ====================================================================================================================
@@ -34,7 +35,7 @@ public class GameController : TMNController
 	public Unit selectedUnit = null;			// currently selected unit
 	public bool allowInput { get; set; }
 	
-	public int turnNumber = 0;
+	public static int turnNumber = 0;
 	
 	// * unused list stuff - can be refactored for inventory
 	//private List<Unit>[] units = {
@@ -108,10 +109,11 @@ public class GameController : TMNController
 			selectedUnit.currMoves = 12;
 			turnNumber++;
 		}
-		if(MovementTrigger.trig2 == 1 && turnNumber == 1){
+		/*if(MovementTrigger.trig2 == 1 && turnNumber == 1){
 			selectedUnit.currMoves = 0;
 			turnNumber++;
-		}
+		}*/
+
 }
 
 	#endregion
@@ -123,7 +125,7 @@ public class GameController : TMNController
 		if(turnNumber > 0){
 			//Check if currMoves = 0. If not, do roll die and updare
 			if(selectedUnit.currMoves != 0){
-				selectedUnit.currMoves = selectedUnit.currMoves;
+				//selectedUnit.currMoves = selectedUnit.currMoves;
 			}else{
 			// Roll Dice
 			selectedUnit.maxMoves = Random.Range(1,6); //Nate's Dice call
@@ -146,7 +148,6 @@ public class GameController : TMNController
 	{
 		base.OnTileNodeClick(go);
 		TileNode node = go.GetComponent<TileNode>();
-Debug.Log("selectedUnit is... " + selectedUnit);
 		if (selectedUnit != null && node.IsVisible)
 		{
 			prevNode = selectedUnit.node; // needed if unit is gonna move
@@ -164,6 +165,14 @@ Debug.Log("selectedUnit is... " + selectedUnit);
 
 				// camera should follow the unit that is moving
 				camMover.Follow(selectedUnit.transform);
+				
+				//insert Bartle Launch Sequence
+				if(turnNumber != 0 && (turnNumber & 1) == 0)
+				{
+					print("I am launching Dialog Manager");
+					script.QuestionPicker();
+				}
+				
 			}
 		}
 	}

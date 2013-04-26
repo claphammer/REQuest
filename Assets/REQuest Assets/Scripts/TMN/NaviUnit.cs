@@ -18,9 +18,6 @@ public class NaviUnit : MonoBehaviour
 	public bool adjustNormals = false; 			// if this is true then adjustToCollider will be performed too
 	public LayerMask adjustmentLayerMask = 0;   // "Terrain" the mapnav is adjusted to
 	public bool usingSameTimeMovement = false; 	// set this to false if your units will NOT be moving at the same
-	
-	//will
-	public GameObject BartleStart;
 
 	#endregion
 	// ====================================================================================================================
@@ -240,12 +237,10 @@ Debug.Log("I am Idle...");
 		// 1st check ifallowed to mvoe further before going to its next tile since 
 		// another unit might have entered the target tile
 
-		//Change Animation State To Walking - wc
+//Change Animation State To Walking - wc
+
 		Debug.Log("I am walking...");
-		gameObject.animation.Play("walk",PlayMode.StopAll);
-		
-		
-		
+		gameObject.animation.Play("walk",PlayMode.StopAll);	
 		
 		//Movement Info - SameTime vs. non.
 		if (usingSameTimeMovement) 
