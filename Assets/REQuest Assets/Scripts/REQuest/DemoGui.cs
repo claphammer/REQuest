@@ -14,7 +14,6 @@ public class DemoGui : MonoBehaviour
 	private QuestLog quest;
 
 	private Rect winRect1 = new Rect(10f, 10f, 200f, 80f);
-	private Rect winRect2 = new Rect(10f, 200f, 200f, 80f);
 
 	static public bool test = false;
 
@@ -27,22 +26,10 @@ public class DemoGui : MonoBehaviour
 
     void OnGUI() 
 	{
-        winRect1 = GUILayout.Window(0, winRect1, DoMyWindow1, "Instructions");
-        winRect1 = GUILayout.Window(3, winRect1, DoMyWindow1, "Misc Info");
-        winRect2 = GUILayout.Window(1, winRect2, DoMyWindow2, "RE-Quest Test GUI");
+        winRect1 = GUILayout.Window(1, winRect1, DoMyWindow1, "RE-Quest Test GUI");
     }
 
-    void DoMyWindow1(int windowID)
-	{
-		GUILayout.Label(string.Format("Move the Player along path to red target."));
-		GUILayout.Label(string.Format("Click a 'lit' tile to move."));
-		GUILayout.Label(string.Format("<cntl>+click to rotate camera"));
-		GUILayout.Label(string.Format("When Player is out of moves:"));
-		GUILayout.Label(string.Format("  1) roll dice"));
-		GUILayout.Label(string.Format("  2) reselect player"));
-    }
-
-	void DoMyWindow2(int windowID)
+	void DoMyWindow1(int windowID)
 	{
 	// FIRST: Check if the Player is selected
 		if (game.selectedUnit == null)

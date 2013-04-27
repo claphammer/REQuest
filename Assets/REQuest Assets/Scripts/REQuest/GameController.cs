@@ -128,7 +128,7 @@ public class GameController : TMNController
 				//selectedUnit.currMoves = selectedUnit.currMoves;
 			}else{
 			// Roll Dice
-			selectedUnit.maxMoves = Random.Range(1,6); //Nate's Dice call
+			selectedUnit.maxMoves = Random.Range(1,6);
 		
 			// Reset call
 			selectedUnit.Reset(); // Reset selected Unit's CurrMoves to match new MaxMoves value
@@ -164,7 +164,7 @@ public class GameController : TMNController
 				if (hideSelectorOnMove) selectionMarker.Hide();
 
 				// camera should follow the unit that is moving
-				camMover.Follow(selectedUnit.transform);
+				//camMover.Follow(selectedUnit.transform);
 				
 				//insert Bartle Launch Sequence
 				if(turnNumber != 0 && (turnNumber & 1) == 0)
