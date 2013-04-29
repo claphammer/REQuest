@@ -32,12 +32,18 @@ public class GameController : TMNController
 	private TileNode prevNode = null;			// helper during movement
 	
 	public bool useTurns = false;				// allow "max moves" to be broken down into sub-moves without a reset
-	public Unit selectedUnit;			// currently selected unit
+	public Unit selectedUnit = null;			// currently selected unit
 	public bool allowInput { get; set; }
 	
 	public static int turnNumber = 0;
+	
+	// * unused list stuff - can be refactored for inventory
+	//private List<Unit>[] units = {
+	//	new List<Unit>(),						// player 1's units
+	//	new List<Unit>()						// player 2's units
+	//};
 
-	//public int currPlayerTurn  { get; set; }	// which player's turn it is, only if useTurns = true;
+	public int currPlayerTurn  { get; set; }	// which player's turn it is, only if useTurns = true;
 
 	#endregion
 	// ====================================================================================================================
@@ -48,15 +54,18 @@ public class GameController : TMNController
 		base.Start();
 		allowInput = false;
 		state = State.Init;		
+	
 	}
 	
 	private void SpawnUnit()
 	{
 		//Find the inspector referenced spawn location and name it "node"
 		TileNode node = playerSpawnPoint;
+				Debug.Log(node);
 		
 		//set "node" specifically to node 478
 		node = map[478];
+				Debug.Log(node);
 		
 		// spawn the unit
 		Unit unit = (Unit)Unit.SpawnUnit(playerChar.gameObject, map, node);
@@ -96,8 +105,8 @@ public class GameController : TMNController
 		}
 		
 		if(MovementTrigger.trig2 == 0 && turnNumber == 0){
-			selectedUnit.maxMoves = 0;
-			selectedUnit.currMoves = 0;
+			selectedUnit.maxMoves = 100;
+			selectedUnit.currMoves = 12;
 			turnNumber++;
 		}
 		/*if(MovementTrigger.trig2 == 1 && turnNumber == 1){
