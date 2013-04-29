@@ -11,26 +11,27 @@ public class CameraMove : MonoBehaviour
 	public float speed = 10f;
 
 	public Transform target;			// target to follow (cam is fixed to following this around till it is NULL)
-	public bool followTarget = true;	// follow the target? (only if target is not NULL)
+	public bool followTarget = false;	// follow the target? (only if target is not NULL)
 	public bool allowInput = true;		// the cam wont read keyinput if set to false
 	public Transform camTr;
 	public Vector2 min_xz;
 	public Vector2 max_xz;
 	private Transform tr;
-	//public float distance = 3f;
-	//public delegate void CamMaunallyMoved();
-	//public CamMaunallyMoved OnCamManuallyMoved = null;
-	//private bool moved = false;// helper
+
+	public delegate void CamMaunallyMoved();
+	public CamMaunallyMoved OnCamManuallyMoved = null;
+
+	private bool moved = false;// helper
 
 	void Start()
-	{
+{
 		tr = this.transform;
 		if (target && followTarget) tr.position = target.position;
 	}
 
 	void Update()
-	{	
-	/*	if (Input.anyKey && allowInput)
+	{
+		if (Input.anyKey && allowInput)
 		{
 			moved = false;
 			if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) { moved = true; Translate(Vector3.forward * Time.deltaTime * speed); }
@@ -50,7 +51,6 @@ public class CameraMove : MonoBehaviour
 				OnCamManuallyMoved(); // call callback
 			}
 		}
-	*/
 	}
 
 	void LateUpdate()
@@ -59,11 +59,6 @@ public class CameraMove : MonoBehaviour
 		{
 			Vector3 difference = target.position - tr.position;
 			tr.position = Vector3.Slerp(tr.position, target.position, Time.deltaTime * Mathf.Clamp(difference.magnitude, 0f, 2f));
-		
-			tr.rotation = Quaternion.Slerp(tr.rotation, target.rotation, 0.05f);    
-       		//tr.position = tr.rotation * Vector3.back * distance + target.position + Vector3.up;
-			
-		
 		}
 	}
 
