@@ -105,8 +105,8 @@ public class GameController : TMNController
 		}
 		
 		if(MovementTrigger.trig2 == 0 && turnNumber == 0){
-			selectedUnit.maxMoves = 100;
-			selectedUnit.currMoves = 12;
+			selectedUnit.maxMoves = 6;
+			selectedUnit.currMoves = 6;
 			turnNumber++;
 		}
 		/*if(MovementTrigger.trig2 == 1 && turnNumber == 1){
