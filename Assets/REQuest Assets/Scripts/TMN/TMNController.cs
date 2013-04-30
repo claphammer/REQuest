@@ -29,7 +29,6 @@ public abstract class TMNController : MonoBehaviour
 
 	public virtual void Start()
 	{
-		
 		if (map == null)
 		{
 			Debug.LogWarning("The 'map' property was not set, attempting to find a MapNav in the scene.");
@@ -41,14 +40,7 @@ public abstract class TMNController : MonoBehaviour
 		}
 
 		_rayMask = (1<<map.tilesLayer | 1<<this.unitsLayer);
-		
-		//"Turn off all Tile nodes" - doesnt fully work.
-		//map.ShowAllTileNodes(false);
 	}
-	/*
-	void FixedUpdate(){
-		Debug.Log("test " +_selectedUnitGo);
-	}*/
 	
 	#endregion
 	// ====================================================================================================================

@@ -17,7 +17,6 @@ public class NaviUnit : MonoBehaviour
 	public bool adjustToCollider = false; 		// adjust units to uneaven terrain
 	public bool adjustNormals = false; 			// if this is true then adjustToCollider will be performed too
 	public LayerMask adjustmentLayerMask = 0;   // "Terrain" the mapnav is adjusted to
-	public bool usingSameTimeMovement = false; 	// set this to false if your units will NOT be moving at the same
 
 	#endregion
 	// ====================================================================================================================
@@ -30,16 +29,13 @@ public class NaviUnit : MonoBehaviour
 	// callbacks for when unit completed a task  **  eventCode 1 = movement to node completed
 	public delegate void UnitEventDelegate(NaviUnit unit, int eventCode);
 	protected UnitEventDelegate onUnitEvent = null;
-
 	protected bool isMoving = false;					// unit is moving
-	protected bool isDelayed = false;					// will be true if unit is waiting for another to move outa the way while isMoving is true
 	protected Vector3 endPointToReach = new Vector3();	// where unit is trying to get to
 	protected Transform _tr;							// cached transform ..... (cached for what?  next move?)
 	protected TileNode[] followPath = null;				// path being followed
 	protected int followMaxMoves = 0;					// how far may be moved on the followPath
 	protected int followIdx = 0;						// next node to move to
 	protected Hashtable iTweenOpt = null;				// cached movement options
-	private float delayTimer = 0f;						// used when unit isDelayed
 
 	#endregion
 	// ====================================================================================================================
@@ -66,8 +62,6 @@ public class NaviUnit : MonoBehaviour
 	
 		//Change Animation State To Idle - wc
 		gameObject.animation.Play("idle",PlayMode.StopAll);		
-Debug.Log("I am ALIVE!" + " Player spawned");
-  
 	}
 
 	// ====================================================================================================================
@@ -93,40 +87,24 @@ Debug.Log("I am ALIVE!" + " Player spawned");
 		}
 	}
 
-	/// <summary>
-	/// checks if unit can stand on the target node
-	/// </summary>
-	/// <param name="andLevelIsOpen">also check if there is a unit in the way?</param>
-	public bool CanStandOn(TileNode targetNode, bool andLevelIsOpen)
+	// check if unit can stand on the target node
+	public bool CanStandOn(TileNode targetNode)
 	{
 		if (targetNode == null) return false;
 
 		// can this unit move onto a lvel on this tile?
 		if ((targetNode.tileTypeMask & this.tileLevel) == this.tileLevel)
 		{
-			// check if there might be unit in the way on target tile?
-			if (andLevelIsOpen)
-			{
-				// success if there is not a unit standing in same level on target tilenode
-				if (targetNode.GetUnitInLevel(this.tileLevel) == null) return true;
-			}
-			else
-			{
-				return true;
-			}
+			return true;
 		}
 
-		// fail
-		return false;
+		return false; // fail
 	}
 
 	// ====================================================================================================================
 
 	/// <summary>called when movement stopped for whatever reason. override if you want to change playing animation for example</summary>
 	protected virtual void OnMovementStopped() { }
-
-	/// <summary>called when movement was delayed because of another unit being in the way. Something that can hapen when units all move at same time</summary>
-	protected virtual void OnMovementDelayed() { }
 
 	/// <summary>called when movement continue afte being delayed (see OnMovementDelayed)</summary>
 	protected virtual void OnMovementContinue() { }
@@ -197,14 +175,8 @@ Debug.Log("I am ALIVE!" + " Player spawned");
 	public void StopMoving()
 	{
 		isMoving = false;
-		isDelayed = false;
-		
-	// Change Animation State To Idle - wc
-	gameObject.animation.Play("idle",PlayMode.StopAll);
-Debug.Log("I am Idle...");
-		
-		
-		
+		gameObject.animation.Play("idle",PlayMode.StopAll); 	// Change Animation State To Idle - wc
+		print("I am Idle...");
 		OnMovementStopped();
 	}
 
@@ -219,16 +191,7 @@ Debug.Log("I am Idle...");
 
 	public virtual void Update()
 	{
-		if (isDelayed)
-		{
-			delayTimer -= Time.deltaTime;
-			if (delayTimer <= 0f)
-			{
-				isDelayed = false;
-				OnMovementContinue();
-				_GotoNextNode();
-			}
-		}
+
 	}
 
 	private void _StartMoving()
@@ -237,77 +200,47 @@ Debug.Log("I am Idle...");
 		// 1st check ifallowed to mvoe further before going to its next tile since 
 		// another unit might have entered the target tile
 
-//Change Animation State To Walking - wc
+		//Change Animation State To Walking - wc
+		gameObject.animation.Play("walk",PlayMode.StopAll);
+		print("I am walking...");
 
-		Debug.Log("I am walking...");
-		gameObject.animation.Play("walk",PlayMode.StopAll);	
-		
-		//Movement Info - SameTime vs. non.
-		if (usingSameTimeMovement) 
-		{
-				endPointToReach = followPath[followMaxMoves - 1].transform.position;
-				iTweenOpt = iTween.Hash(
-							"position", Vector3.zero,
+		// setup iTween options to be used with this move
+		iTweenOpt = iTween.Hash(
 							"speed", ((moveSpeedMulti * followMaxMoves) + 1f) * moveSpeed,
 							"orienttopath", true,
 							"easetype", "linear",
 							"oncomplete", "_OnCompleteMoveTo",
 							"oncompletetarget", gameObject);
 
-				if (!tiltToPath || adjustNormals) iTweenOpt.Add("axis", "y");
+		if (!tiltToPath || adjustNormals) iTweenOpt.Add("axis", "y");
 
-			if ((adjustNormals || adjustToCollider) && adjustmentLayerMask != 0)
-			{
-				iTweenOpt.Add("onupdate", "_OnMoveToUpdate");
-				iTweenOpt.Add("onupdatetarget", gameObject);
-			}
-
-			// start moving
-			followIdx = 0;
-			_GotoNextNode();
-		}
-		
-		else // *** not usingSameTimeMovement
+		if ((adjustNormals || adjustToCollider) && adjustmentLayerMask != 0)
 		{
-			// setup iTween options to be used with this move
-				iTweenOpt = iTween.Hash(
-									"speed", ((moveSpeedMulti * followMaxMoves) + 1f) * moveSpeed,
-									"orienttopath", true,
-									"easetype", "linear",
-									"oncomplete", "_OnCompleteMoveTo",
-									"oncompletetarget", gameObject);
-
-				if (!tiltToPath || adjustNormals) iTweenOpt.Add("axis", "y");
-
-				if ((adjustNormals || adjustToCollider) && adjustmentLayerMask != 0)
-				{
-					iTweenOpt.Add("onupdate", "_OnMoveToUpdate");
-					iTweenOpt.Add("onupdatetarget", gameObject);
-				}
-
-				if (followMaxMoves > 1)
-				{
-					Vector3[] points = new Vector3[followMaxMoves];
-					for (int i = 0; i < followMaxMoves; i++) points[i] = followPath[i].transform.position;
-					endPointToReach = points[points.Length - 1];
-					iTweenOpt.Add("path", points);
-				}
-				else
-				{
-					endPointToReach = followPath[0].transform.position;
-					iTweenOpt.Add("position", endPointToReach);
-				}
-
-				// unlink with current node and link with destination node
-				node.units.Remove(this);
-				node = followPath[followMaxMoves-1];
-				node.units.Add(this);
-
-				// start movement
-				iTween.MoveTo(this.gameObject, iTweenOpt);
-			//}
+			iTweenOpt.Add("onupdate", "_OnMoveToUpdate");
+			iTweenOpt.Add("onupdatetarget", gameObject);
 		}
 
+		if (followMaxMoves > 1)
+		{
+			Vector3[] points = new Vector3[followMaxMoves];
+			for (int i = 0; i < followMaxMoves; i++) points[i] = followPath[i].transform.position;
+			endPointToReach = points[points.Length - 1];
+			iTweenOpt.Add("path", points);
+		}
+		else
+		{
+			endPointToReach = followPath[0].transform.position;
+			iTweenOpt.Add("position", endPointToReach);
+		}
+
+		// unlink with current node and link with destination node
+		node.units.Remove(this);
+		node = followPath[followMaxMoves-1];
+		node.units.Add(this);
+
+		// start movement
+		iTween.MoveTo(this.gameObject, iTweenOpt);
+	
 	}
 
 	private void _GotoNextNode()
@@ -332,14 +265,14 @@ Debug.Log("I am Idle...");
 				}
 			}
 			
-			if (!isFine)
-			{
+			//if (!isFine)
+			//{
 				// will wait a bit and then try to move again
 				//isDelayed = true;
 				//delayTimer = 0.1f;
-				OnMovementDelayed();
-				return;
-			}
+				//OnMovementDelayed();
+				//return;
+			//}
 
 			// unlink with current node and link with destination node
 			node.units.Remove(this);
@@ -372,15 +305,8 @@ Debug.Log("I am Idle...");
 	private void _OnCompleteMoveTo()
 	{
 	    _UpdateUnitNormal();
-		if (usingSameTimeMovement)
-		{
-			_GotoNextNode();
-		}
-		else
-		{
-			StopMoving();
-			if (onUnitEvent != null) onUnitEvent(this, 1);
-		}
+		StopMoving();
+		if (onUnitEvent != null) onUnitEvent(this, 1);
 	}
 
 	/// <summary> Adjust the Unit's normals to match the terrain </summary>

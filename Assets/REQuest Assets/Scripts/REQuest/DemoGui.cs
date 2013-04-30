@@ -18,9 +18,9 @@ public class DemoGui : MonoBehaviour
 
 	static public bool test = false;
 
-	void Start()
+	//void Start()
+	void Update() //??
 	{
-		//turn = ((int)GameController.turnNumber);
 		game = gameObject.GetComponent<GameController>();
 		inv = gameObject.GetComponent<Inventory>();
 		quest = gameObject.GetComponent<QuestLog>();
@@ -43,7 +43,8 @@ public class DemoGui : MonoBehaviour
 		// Create Slots for Player input and feedback
 			//Slot 1: Who is the Player?
 			GUILayout.Space(10f);
-			GUILayout.Label(string.Format("Player = " + game.selectedUnit));
+			GUILayout.Label(string.Format("Player= " + game.selectedUnit));
+			GUILayout.Label(string.Format("State= " + game.state));
 
 			//Slot 2a: Toggle Inventory Window
 			GUILayout.Space(10f);

@@ -26,8 +26,8 @@ public class GameController : TMNController
 	// ====================================================================================================================
 	#region vars
 	
-	private enum State : byte { Init=0, Running, DontRun }
-	private State state = State.Init;
+	public enum State : byte { Init=0, Running, DontRun }
+	public State state = State.Init;
 	private TileNode hoverNode = null;			// that that mouse is hovering over
 	private TileNode prevNode = null;			// helper during movement
 	
@@ -48,18 +48,12 @@ public class GameController : TMNController
 		base.Start();
 		allowInput = false;
 		state = State.Init;		
-	
 	}
 	
 	private void SpawnUnit()
 	{
-		//Find the inspector referenced spawn location and name it "node"
-		TileNode node = playerSpawnPoint;
-				Debug.Log(node);
-		
-		//set "node" specifically to node 478
-		node = map[478];
-				Debug.Log(node);
+		//set Player Starting node to node 478
+		TileNode node = map[478];
 		
 		// spawn the unit
 		Unit unit = (Unit)Unit.SpawnUnit(playerChar.gameObject, map, node);
@@ -77,9 +71,6 @@ public class GameController : TMNController
 
 	public void Update()
 	{		
-		//Find the spawn location
-		TileNode node = playerSpawnPoint;
-		
 		if (state == State.Running)
 		{
 			// check if player clicked on tiles/units. 
@@ -89,11 +80,11 @@ public class GameController : TMNController
 
 			if (allowInput) this.HandleInput();
 		}
-
 		else if (state == State.Init)
 		{
-			Debug.Log("State should be INIT.  Survey Says: " + state + " and about to spawn the player at: " + node);
+			print(state);
 			state = State.Running;
+			print(state);
 			SpawnUnit(); // Call SpawnUnit function
 			allowInput = true;
 		}

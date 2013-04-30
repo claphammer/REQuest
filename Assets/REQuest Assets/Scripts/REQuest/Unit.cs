@@ -21,17 +21,17 @@ public class Unit : NaviUnit
 	public int currMoves = 0; // how many moves this unit has left
 			
 	#endregion
-	// ====================================================================================================================
+// ====================================================================================================================
 	#region pub
 
-	/// <summary>Should be called right after unit was spawned</summary>
+/// <summary>Should be called right after unit was spawned</summary>
 	public override void Init(UnitEventDelegate callback)
 	{
 		base.Init(callback);
 		this.Reset();		
 	}
 
-	/// <summary>Reset some values</summary>
+/// <summary>Reset some values</summary>
 	public void Reset()
 	{
 		currMoves = maxMoves;
