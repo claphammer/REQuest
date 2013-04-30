@@ -10,6 +10,7 @@ using System.Collections;
 public class DemoGui : MonoBehaviour 
 {
 	private GameController game;
+	//private int turn;
 	private Inventory inv;
 	private QuestLog quest;
 
@@ -19,6 +20,7 @@ public class DemoGui : MonoBehaviour
 
 	void Start()
 	{
+		//turn = ((int)GameController.turnNumber);
 		game = gameObject.GetComponent<GameController>();
 		inv = gameObject.GetComponent<Inventory>();
 		quest = gameObject.GetComponent<QuestLog>();
@@ -53,7 +55,8 @@ public class DemoGui : MonoBehaviour
 
 			//Slot 2: Use Turns Checkbox
 			GUILayout.Space(10f);
-			game.useTurns = GUILayout.Toggle(game.useTurns, "USE TURNS");
+			GUILayout.Label(string.Format("Turn# = " + game.turnNumber));
+			//game.useTurns = GUILayout.Toggle(game.useTurns, "USE TURNS");
 
 			//if (game.useTurns)
 			//{
@@ -63,7 +66,7 @@ public class DemoGui : MonoBehaviour
 				GUILayout.Label(string.Format("Moves Left: "+ game.selectedUnit.currMoves));
 			//Slot 4: Max Moves (maxMoves) Display
 				GUILayout.Label(string.Format("Max moves (Roll) this turn: " + game.selectedUnit.maxMoves));
-			//Slot 5: Reset Turn...SOON TO BE ROLL DIE	
+			//Slot 5: ROLL DIE	
 				if (game.allowInput)
 				{
 					GUILayout.Space(10f);

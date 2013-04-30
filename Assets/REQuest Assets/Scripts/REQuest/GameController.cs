@@ -35,13 +35,7 @@ public class GameController : TMNController
 	public Unit selectedUnit = null;			// currently selected unit
 	public bool allowInput { get; set; }
 	
-	public static int turnNumber = 0;
-	
-	// * unused list stuff - can be refactored for inventory
-	//private List<Unit>[] units = {
-	//	new List<Unit>(),						// player 1's units
-	//	new List<Unit>()						// player 2's units
-	//};
+	public int turnNumber = 0;
 
 	public int currPlayerTurn  { get; set; }	// which player's turn it is, only if useTurns = true;
 
@@ -104,15 +98,11 @@ public class GameController : TMNController
 			allowInput = true;
 		}
 		
-		if(MovementTrigger.trig2 == 0 && turnNumber == 0){
-			selectedUnit.maxMoves = 6;
-			selectedUnit.currMoves = 6;
-			turnNumber++;
-		}
-		/*if(MovementTrigger.trig2 == 1 && turnNumber == 1){
+		if(turnNumber == 0)
+		{
+			selectedUnit.maxMoves = 0;
 			selectedUnit.currMoves = 0;
-			turnNumber++;
-		}*/
+		}
 
 }
 
@@ -122,21 +112,22 @@ public class GameController : TMNController
 	
 	public void ChangeTurn(bool changeTurn)  //cycle turn moves even for single player
 	{	
-		if(turnNumber > 0){
-			//Check if currMoves = 0. If not, do roll die and updare
-			if(selectedUnit.currMoves != 0){
-				//selectedUnit.currMoves = selectedUnit.currMoves;
-			}else{
+		//Check if currMoves = 0. If not, do roll die and updare
+		if(selectedUnit.currMoves != 0)
+		{
+			//do nothing
+		}
+		else
+		{
 			// Roll Dice
 			selectedUnit.maxMoves = Random.Range(1,6);
 		
 			// Reset call
 			selectedUnit.Reset(); // Reset selected Unit's CurrMoves to match new MaxMoves value
-				
+							
+			//
 			turnNumber++;
-			}
 		}
-		
 	}
 
 	
