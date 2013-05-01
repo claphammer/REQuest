@@ -39,7 +39,7 @@ public abstract class TMNController : MonoBehaviour
 			if (map == null) Debug.LogError("Could not find a MapNav in the scene. You gonna get NullRef errors soon!");
 		}
 
-		_rayMask = (1<<map.tilesLayer | 1<<this.unitsLayer);
+		_rayMask = (1<<map.tilesLayer | 1<<this.unitsLayer);  // -WC: add a gui layer here for gui handling??
 	}
 	
 	#endregion
@@ -50,7 +50,7 @@ public abstract class TMNController : MonoBehaviour
 	protected void HandleInput()
 	{
 		// only continue if left-mouse-click detected or if a unit is currently selected
-		if (!Input.GetMouseButtonUp(0) && _selectedUnitGo == null) return;
+		//if (!Input.GetMouseButtonUp(0) && _selectedUnitGo == null) return;
 
 		bool unselect = (Input.GetMouseButtonUp(0) ? true : false);
 
@@ -87,13 +87,14 @@ public abstract class TMNController : MonoBehaviour
 					if (_selectedUnitGo != null)
 					{
 						OnTileNodeHover(null);
-						OnClearNaviUnitSelection(hit.collider.gameObject);
+						//OnClearNaviUnitSelection(hit.collider.gameObject);
 					}
 
 					// select clicked unit
 					OnNaviUnitClick(hit.collider.gameObject);
 				}
 			}
+			
 		}
 		else if (_hoverNodeGo != null)
 		{
@@ -103,7 +104,7 @@ public abstract class TMNController : MonoBehaviour
 		if (unselect)
 		{
 			OnTileNodeHover(null);
-			OnClearNaviUnitSelection(null);
+			//OnClearNaviUnitSelection(null);
 		}
 	}
 
@@ -131,7 +132,7 @@ public abstract class TMNController : MonoBehaviour
 	//protected virtual void OnClearNaviUnitSelection(GameObject clickedAnotherUnit)
 	protected virtual void OnClearNaviUnitSelection(GameObject unitGo)
 	{
-		_selectedUnitGo = null;
+		//_selectedUnitGo = null;
 		print(_selectedUnitGo);
 		_selectedUnitGo = unitGo;											// THIS activates the player
 		print(_selectedUnitGo);

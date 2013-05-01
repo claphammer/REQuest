@@ -28,7 +28,7 @@ public class Unit : NaviUnit
 	public override void Init(UnitEventDelegate callback)
 	{
 		base.Init(callback);
-		//this.Reset();		
+		this.Reset();		
 	}
 
 /// <summary>Reset some values</summary>

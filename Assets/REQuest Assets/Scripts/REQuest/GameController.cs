@@ -36,7 +36,7 @@ public class GameController : TMNController
 	
 	public int turnNumber = 0;
 
-	public int currPlayerTurn  { get; set; }	// which player's turn it is, only if useTurns = true;
+	//public int currPlayerTurn  { get; set; }	// which player's turn it is, only if useTurns = true;
 
 	#endregion
 	// ====================================================================================================================
@@ -103,7 +103,7 @@ public class GameController : TMNController
 	
 	public void ChangeTurn(bool changeTurn)  //cycle turn moves even for single player
 	{	
-		//Check if currMoves = 0. If not, do roll die and updare
+		//Check if currMoves = 0. If not: roll die and update
 		if(selectedUnit.currMoves != 0)
 		{
 			//do nothing
