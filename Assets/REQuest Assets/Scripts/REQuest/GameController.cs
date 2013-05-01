@@ -19,7 +19,6 @@ public class GameController : TMNController
 	public bool hideSelectorOnMove = true;		// hide the selection marker when a unit moves?
 	public bool hideMarkersOnMove = true;		// hide the node markers when a unit moves?
 	
-	public bool test = false;
 	public _BartleManager script;
 
 	#endregion
@@ -31,7 +30,7 @@ public class GameController : TMNController
 	private TileNode hoverNode = null;			// that that mouse is hovering over
 	private TileNode prevNode = null;			// helper during movement
 	
-	public bool useTurns = false;				// allow "max moves" to be broken down into sub-moves without a reset
+	//public bool useTurns = false;				// allow "max moves" to be broken down into sub-moves without a reset
 	public Unit selectedUnit = null;			// currently selected unit
 	public bool allowInput { get; set; }
 	
@@ -71,6 +70,7 @@ public class GameController : TMNController
 
 	public void Update()
 	{		
+		//print(_selectedUnitGo);
 		if (state == State.Running)
 		{
 			// check if player clicked on tiles/units. 
@@ -193,7 +193,7 @@ public class GameController : TMNController
 	// ====================================================================================================================
 	#region input handlers - click unit
 
-	protected override void OnNaviUnitClick(GameObject go)
+	public override void OnNaviUnitClick(GameObject go)
 	{
 		base.OnNaviUnitClick(go);
 
@@ -204,7 +204,7 @@ public class GameController : TMNController
 
 		// -----------------------------------------------------------------------
 		// not using turns sample?
-		if (useTurns)
+	/*	if (useTurns)
 		{
 			// is active player's unit that was clicked on?
 			//if (unit.playerSide == (currPlayerTurn + 1))
@@ -218,12 +218,12 @@ public class GameController : TMNController
 				selectedUnit.node.ShowNeighbours(selectedUnit.currMoves, selectedUnit.tileLevel, true, true);
 
 		}
-
+		 */
 		
 		// -----------------------------------------------------------------------
 		// using turns sample
-		else
-		{
+	//	else
+	//	{
 			bool changeUnit = true;
 
 			if (changeUnit)
@@ -236,7 +236,7 @@ public class GameController : TMNController
 				// show the nodes that this unit can move to
 				selectedUnit.node.ShowNeighbours(selectedUnit.currMoves, selectedUnit.tileLevel, true, true);
 			}
-		}
+	//	}
 
 	}
 
@@ -252,12 +252,12 @@ public class GameController : TMNController
 		// eventcode 1 = unit finished moving
 		if (eventCode == 1)
 		{
-			Unit u = (unit as Unit);
+			//Unit u = (unit as Unit);
 
-			if (!useTurns)
-			{
-				u.currMoves = u.maxMoves; // units constantly get rest to max after completing a move sequence
-			}
+		//	if (!useTurns)
+		//	{
+		//		u.currMoves = u.maxMoves; // units constantly get rest to max after completing a move sequence
+		//	}
 
 			if (!hideMarkersOnMove && prevNode != null)
 			{	// the markers where not hidden when the unit started moving,
@@ -266,7 +266,7 @@ public class GameController : TMNController
 			}
 
 			// do a fake click on the unit to "select" it again
-			//this.OnNaviUnitClick(unit.gameObject);
+			this.OnNaviUnitClick(unit.gameObject);
 			allowInput = true; // allow input again
 		}
 	}

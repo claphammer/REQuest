@@ -121,15 +121,20 @@ public abstract class TMNController : MonoBehaviour
 	}
 
 	/// <summary>Handles unit clicks</summary>
-	protected virtual void OnNaviUnitClick(GameObject unitGo)
+	public virtual void OnNaviUnitClick(GameObject unitGo)
 	{
-		_selectedUnitGo = unitGo;
+		_selectedUnitGo = unitGo;											// THIS activates the player
+		print(_selectedUnitGo);
 	}
 
 	/// <summary>Handles unit unselect</summary>
-	protected virtual void OnClearNaviUnitSelection(GameObject clickedAnotherUnit)
+	//protected virtual void OnClearNaviUnitSelection(GameObject clickedAnotherUnit)
+	protected virtual void OnClearNaviUnitSelection(GameObject unitGo)
 	{
 		_selectedUnitGo = null;
+		print(_selectedUnitGo);
+		_selectedUnitGo = unitGo;											// THIS activates the player
+		print(_selectedUnitGo);
 	}
 
 	#endregion
