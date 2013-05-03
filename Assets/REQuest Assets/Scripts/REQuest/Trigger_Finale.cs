@@ -16,7 +16,7 @@ public ParticleSystem particles;
 	void OnTriggerEnter(Collider Player) {
 		if(trig2 == 0){
 		trig2 = 1;
-		Debug.Log("Trigger 2 "+trig2);
+		Debug.Log("Trigger Finale "+trig2);
 			
 		audio.Play();	
 		//particleEmitter.enabled = true;
