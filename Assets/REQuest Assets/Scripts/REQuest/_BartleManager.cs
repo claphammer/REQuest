@@ -20,7 +20,7 @@ public class _BartleManager : MonoBehaviour
     {
 		if (questionAsked == true)
 		{
-			Debug.Log("Question has been asked this turn");
+			print("Question has already been asked this turn");
 			return;
 		}
 		else
@@ -48,8 +48,8 @@ public class _BartleManager : MonoBehaviour
         GameObject go = GameObject.Instantiate(questions[currQuestion]) as GameObject;
         questions.RemoveAt(currQuestion);
 		print("Current Question(list order#): " + currQuestion); //Print our random pick
-		print("Total Questions Left in ORIGINAL List: " + bQuestions.Count); //Print how many questions remain in the ORIGINAL LIST
-		print("Total Questions Left in Copied List: " + questions.Count); //Print how many questions remain in the copied LIST
+		//print("Total Questions Left in ORIGINAL List: " + bQuestions.Count); //Print how many questions remain in the ORIGINAL LIST
+		//print("Total Questions Left in Copied List: " + questions.Count); //Print how many questions remain in the copied LIST
 
         return go;
     }
