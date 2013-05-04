@@ -19,7 +19,7 @@ public class GameController : TMNController
 	public bool hideSelectorOnMove = true;		// hide the selection marker when a unit moves?
 	public bool hideMarkersOnMove = true;		// hide the node markers when a unit moves?
 	
-	public _BartleManager script;
+	public _BartleManager bartle;
 
 	#endregion
 	// ====================================================================================================================
@@ -46,7 +46,9 @@ public class GameController : TMNController
 	{
 		base.Start();
 		allowInput = false;
-		state = State.Init;		
+		state = State.Init;
+		bartle = GetComponentInChildren<_BartleManager>();
+		bartle.ResetQuestions();
 	}
 	
 	private void SpawnUnit()
@@ -118,6 +120,7 @@ public class GameController : TMNController
 							
 			//
 			turnNumber++;
+			bartle.questionAsked = false;
 		}
 	}
 
@@ -152,7 +155,7 @@ public class GameController : TMNController
 				if(turnNumber != 0 && (turnNumber & 1) == 0)
 				{
 					print("I am launching Dialog Manager");
-					script.QuestionPicker();
+					bartle.QuestionPicker();
 				}
 				
 			}
