@@ -29,8 +29,9 @@ public class GameController : TMNController
 	public State state = State.Init;
 	private TileNode hoverNode = null;			// that that mouse is hovering over
 	private TileNode prevNode = null;			// helper during movement
+	  private Die dieVal;
 	
-	//public bool useTurns = false;				// allow "max moves" to be broken down into sub-moves without a reset
+	  public bool useTurns = false;				// allow "max moves" to be broken down into sub-moves without a reset
 	public Unit selectedUnit = null;			// currently selected unit
 	public bool allowInput { get; set; }
 	
@@ -49,6 +50,7 @@ public class GameController : TMNController
 		state = State.Init;
 		bartle = GetComponentInChildren<_BartleManager>();
 		bartle.ResetQuestions();
+		  dieVal = gameObject.GetComponent<Die>();
 	}
 	
 	private void SpawnUnit()
@@ -113,7 +115,8 @@ public class GameController : TMNController
 		else
 		{
 			// Roll Dice
-			selectedUnit.maxMoves = Random.Range(1,6);
+			//selectedUnit.maxMoves = Random.Range(1,6);
+			selectedUnit.maxMoves = dieVal.value;
 		
 			// Reset call
 			selectedUnit.Reset(); // Reset selected Unit's CurrMoves to match new MaxMoves value
