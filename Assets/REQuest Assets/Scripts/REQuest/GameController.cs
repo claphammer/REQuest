@@ -19,7 +19,7 @@ public class GameController : TMNController
 	public bool hideSelectorOnMove = true;		// hide the selection marker when a unit moves?
 	public bool hideMarkersOnMove = true;		// hide the node markers when a unit moves?
 	
-	public _BartleManager bartle;
+
 
 	#endregion
 	// ====================================================================================================================
@@ -29,13 +29,20 @@ public class GameController : TMNController
 	public State state = State.Init;
 	private TileNode hoverNode = null;			// that that mouse is hovering over
 	private TileNode prevNode = null;			// helper during movement
-	  private Die dieVal;
+
 	
-	  public bool useTurns = false;				// allow "max moves" to be broken down into sub-moves without a reset
+	
+	public bool useTurns = false;				// allow "max moves" to be broken down into sub-moves without a reset
 	public Unit selectedUnit = null;			// currently selected unit
 	public bool allowInput { get; set; }
 	
 	public int turnNumber = 0;
+	
+	private _BartleManager bartle;
+	private Dice dice;
+	public Die die;
+	public int dieValue;
+	
 
 	//public int currPlayerTurn  { get; set; }	// which player's turn it is, only if useTurns = true;
 
@@ -50,7 +57,9 @@ public class GameController : TMNController
 		state = State.Init;
 		bartle = GetComponentInChildren<_BartleManager>();
 		bartle.ResetQuestions();
-		  dieVal = gameObject.GetComponent<Die>();
+		dice = gameObject.GetComponentInChildren<Dice>();
+		die = gameObject.GetComponentInChildren<Die>();
+
 	}
 	
 	private void SpawnUnit()
@@ -74,7 +83,7 @@ public class GameController : TMNController
 
 	public void Update()
 	{		
-		//print(_selectedUnitGo);
+		
 		if (state == State.Running)
 		{
 			// check if player clicked on tiles/units. 
@@ -99,14 +108,27 @@ public class GameController : TMNController
 			selectedUnit.currMoves = 0;
 		}
 
-}
+	}
+	
+
 
 	#endregion
 	// ====================================================================================================================
 	#region pub
 	
+	public int DieValue(int dieValue)
+    {
+      //  get
+       // {
+            return die.val;
+        //}
+    }
+	
+	
 	public void ChangeTurn(bool changeTurn)  //cycle turn moves even for single player
 	{	
+		
+		
 		//Check if currMoves = 0. If not: roll die and update
 		if(selectedUnit.currMoves != 0)
 		{
@@ -116,7 +138,19 @@ public class GameController : TMNController
 		{
 			// Roll Dice
 			//selectedUnit.maxMoves = Random.Range(1,6);
-			selectedUnit.maxMoves = dieVal.value;
+
+			dice.UpdateRoll();
+			
+
+			
+			
+			
+			
+			
+			
+			
+			print("GameController says DieRoll is: " + dieValue);
+			//selectedUnit.maxMoves = die.val;
 		
 			// Reset call
 			selectedUnit.Reset(); // Reset selected Unit's CurrMoves to match new MaxMoves value

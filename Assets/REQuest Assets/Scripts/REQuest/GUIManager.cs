@@ -44,9 +44,9 @@ public class GUIManager : MonoBehaviour
 				Graphics.DrawTexture(new Rect(Screen.width - sizeMM - offsetMM, offsetMM, sizeMM, sizeMM), miniMapTexture, miniMapMaterial);
 		if (game.allowInput)
 		{
-			GUILayout.Space(10f);
-			if (GUILayout.Button("Reset Turn / Roll Die"))
-			{ 
+			
+		if (GUI.Button(new Rect (20,Screen.height - 200,180,20), "Reset Turn / Roll Die"))
+		{ 
 				game.ChangeTurn(true);
 			}
 		}

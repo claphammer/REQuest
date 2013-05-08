@@ -19,12 +19,10 @@ using UnityEngine;
 using System.Collections;
 
 
-public class Dice : MonoBehaviour {	
+public class Dice : Die {	
 
-	
     public float rollSpeed = 0.25F;  // how many seconds pass between rolling the single dice
     public static bool rolling = true;  // true when dice still rolling, checked with rigidBody.velocity and rigidBody.angularVelocity
-	
 	//---
 	
     protected float rollTime = 0;  // keep rolling time to determine when die to be rolled
@@ -33,10 +31,9 @@ public class Dice : MonoBehaviour {
     private static ArrayList rollQueue = new ArrayList();  	// reference to the dice that have to be rolled
 	private static ArrayList allDice = new ArrayList();  	// reference to all dice, created by Dice.Roll
     private static ArrayList rollingDice = new ArrayList();  // reference to the dice that are rolling
-	
-//-------
-//  TEST AREA
-//-------
+
+	private string _color = "red";
+/*	
 	string randomColor
 	{
 		get
@@ -55,7 +52,7 @@ public class Dice : MonoBehaviour {
 			return _color;
 		}
 	}
-	
+	*/
     // dertermine random rolling force
     private GameObject spawnPoint = null;
     private Vector3 Force()
@@ -64,27 +61,25 @@ public class Dice : MonoBehaviour {
         return Vector3.Lerp(spawnPoint.transform.position, rollTarget, 1).normalized * (-35 - Random.value * 20);
     }
 
-	void UpdateRoll()
+	public void UpdateRoll()
 	{
         spawnPoint = GameObject.Find("spawnPoint");
 		Clear();
-     // Roll("1d10", "d10-" + randomColor, spawnPoint.transform.position, Force());
-        Roll("1d6", "d6-" + randomColor, spawnPoint.transform.position, Force());
+        Roll("1d6", "d6-" + _color, spawnPoint.transform.position, Force());
     }
 	
 	void OnGUI()
     {
-		if (GUI.Button (new Rect (20,Screen.height - 200,180,20), "Roll Dice")) 	
+		if (GUI.Button (new Rect (20,Screen.height - 150,180,20), "Roll Dice")) 	
 		{
 			UpdateRoll();
+			print("Just called UpdateRoll from Dice.  Die val set and retrieved with die.val= " + base.val);
 		}
         GUI.Box(new Rect( 20 , Screen.height - 35 , 180 , 20), "");
 		GUI.Label(new Rect(30, Screen.height - 35, 180, 20), AsString(""));
-		//Debug.Log(Die.value);
+					
+		
 	}
-//-------
-// End TEST area
-//---------
 	
 	/// This method will create/instance a prefab at a specific position with a specific rotation and a specific scale and assign a material
 	public static GameObject prefab(string name, Vector3 position, Vector3 rotation, Vector3 scale, string mat)
@@ -140,13 +135,7 @@ public class Dice : MonoBehaviour {
 		// return material - null if not found
 		return mat;		
 	}
-	
-	/// Log a text to the console
-	public static void debug(string txt)
-	{
-		Debug.Log(txt);
-	}		
-	
+
 	/// <summary>
 	/// Roll one or more dice with a specific material from a spawnPoint and give it a specific force.
 	/// format dice 			: 	({count}){die type}	, exmpl.  d6, 4d4, 12d8 , 1d20
@@ -183,10 +172,6 @@ public class Dice : MonoBehaviour {
 			// instantiate the dice
 			for (int d=0; d<count; d++)
 			{
-				// randomize spawnPoint variation
-			//	spawnPoint.x = spawnPoint.x - 1 + Random.value * 2;		
-			//	spawnPoint.y = spawnPoint.y - 1 + Random.value * 2;
-             //   spawnPoint.y = spawnPoint.y - 1 + Random.value * 2;
 				// create the die prefab/gameObject
                 GameObject die = prefab(dieType, spawnPoint, Vector3.zero, Vector3.one, mat);
 				// give it a random rotation
@@ -215,7 +200,7 @@ public class Dice : MonoBehaviour {
             RollingDie rDie = (RollingDie) allDice[d];
 			// check the type
             if (rDie.name == dieType || dieType == "")
-                v += rDie.die.value;
+                v += rDie.die.val;
         }
         return v;
     }
@@ -268,7 +253,7 @@ public class Dice : MonoBehaviour {
                     if (hasValue) v += " + ";
 					// if the value of the die is 0 , no value could be determined
 					// this could be because the die is rolling or is in a invalid position
-                    v += "" + ((rDie.die.value == 0) ? "?" : "" + rDie.die.value);
+                    v += "" + ((rDie.die.val == 0) ? "?" : "" + rDie.die.val);
                     hasValue = true;
                 }
             }
@@ -297,6 +282,8 @@ public class Dice : MonoBehaviour {
 	/// </summary>
     void Update()
     {
+		
+		
         if (rolling)
         {
 			// there are dice rolling so increment rolling time
@@ -378,7 +365,7 @@ class RollingDie
     {
         get
         {
-            return die.value;
+            return die.val;
         }
     }
 

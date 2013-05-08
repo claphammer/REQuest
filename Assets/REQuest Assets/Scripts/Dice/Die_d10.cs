@@ -21,6 +21,7 @@ using System.Collections;
 public class Die_d10 : Die {
 		
     override protected Vector3 HitVector(int side)
+	//override protected Vector3 HitVector(int side)
     {
         switch (side)
         {

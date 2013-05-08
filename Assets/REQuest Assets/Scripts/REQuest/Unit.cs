@@ -11,14 +11,14 @@ public class Unit : NaviUnit
 	// ====================================================================================================================
 	#region inspector properties
 
-	public int maxMoves =  2;			// how far this unit can move per turn
+	public int maxMoves =  0;			// how far this unit can move per turn
 
 	#endregion
 	// ====================================================================================================================
 	#region vars
 
 	//[HideInInspector]
-	public int currMoves = 2; // how many moves this unit has left
+	public int currMoves = 0; // how many moves this unit has left
 			
 	#endregion
 // ====================================================================================================================
