@@ -187,9 +187,8 @@ public class Dice : Die {
 		}
 	}
 
-	/// <summary>
-	/// Get value of all ( dieType = "" ) dice or dieType specific dice.
-	/// </summary>
+
+	// Get value of all ( dieType = "" ) dice or dieType specific dice.
     public static int Value(string dieType)
     {
         int v = 0;
@@ -202,14 +201,14 @@ public class Dice : Die {
                 v += rDie.die.val;
         }
 		
-		if (!diceRolling && !valPassedToPlayer)
+		// if the dice dice are done rolling AND the value hasnt been passed to player yet, then pass it now...and reset the player turn.
+		if (!diceRolling && !valPassedToPlayer && v > 0)
 		{
 			valPassedToPlayer = true;
-			print("Player MaxMoves: " + game.selectedUnit.maxMoves);
 			game.selectedUnit.maxMoves = v;
-			print("Player MaxMoves updated to current die roll: " + game.selectedUnit.maxMoves);
 			game.selectedUnit.Reset(); // Reset selected Unit's CurrMoves to match new MaxMoves value
-			print("reset unit just called from Dice");
+			game.turnNumber++;
+			game.bartle.questionAsked = false;
 		}
 		
 		return v;
