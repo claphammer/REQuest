@@ -17,21 +17,17 @@ public class GUIManager : MonoBehaviour
 	private Inventory inv;
 	private QuestLog quest;
 	private GameController game;
+	private Dice dice;
 	private Rect winRect1 = new Rect(10f, 10f, 200f, 80f);
 	
 	void Start()
 	{
-		game = gameObject.GetComponent<GameController>();
-		inv = gameObject.GetComponent<Inventory>();
-		quest = gameObject.GetComponent<QuestLog>();
+		game = GetComponent<GameController>();
+		inv = GetComponent<Inventory>();
+		quest = GetComponent<QuestLog>();
+		dice = GetComponent<Dice>();
 	}
-	/*
-	void Awake()
-	{
-		offsetDR = 10;
-		offsetMM = 10;
-	}
-	*/
+
 	void OnGUI()
 	{
 		//DieRollWindow
@@ -44,11 +40,14 @@ public class GUIManager : MonoBehaviour
 				Graphics.DrawTexture(new Rect(Screen.width - sizeMM - offsetMM, offsetMM, sizeMM, sizeMM), miniMapTexture, miniMapMaterial);
 		if (game.allowInput)
 		{
-			
-		if (GUI.Button(new Rect (20,Screen.height - 200,180,20), "Reset Turn / Roll Die"))
-		{ 
+			if (GUI.Button(new Rect (20,Screen.height - 200,180,20), "Reset Turn / Roll Die"))
+			{ 
 				game.ChangeTurn(true);
 			}
+			
+			        GUI.Box(new Rect( 20 , Screen.height - 35 , 180 , 20), "");
+		GUI.Label(new Rect(30, Screen.height - 35, 180, 20), Dice.AsString(""));
+			
 		}
 		
 		winRect1 = GUILayout.Window(1, winRect1, DoMyWindow1, "RE-Quest Test GUI");

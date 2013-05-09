@@ -24,20 +24,12 @@ public class Die : MonoBehaviour {
 
 
 	public int val = 0;	
-	private GameController game;  /////////
+  
 
-	
 	// normalized (hit)vector from die center to upper side in local space is used to determine what side of a specific die is up/down = value
     protected Vector3 localHitNormalized;
 	// hitVector check margin
     protected float validMargin = 0.45F;
-	
-	
-	void Start()
-	{
-		game = gameObject.GetComponent<GameController>();
-	}
-	
 	
 	
 	// true is die is still rolling
@@ -73,6 +65,7 @@ public class Die : MonoBehaviour {
 	// calculate this die's value
     public void GetValue()
     {
+		//GameController game1 = GetComponent<GameController>();
 		// value = 0 -> undetermined or invalid
         val = 0;
         float delta = 1;
@@ -106,15 +99,15 @@ public class Die : MonoBehaviour {
             side++;
 			// if we got a Vector.zero as the testHitVector we have checked all sides of this die
         } while (testHitVector != Vector3.zero);
-		Debug.Log("Just got val from the dice roll in Die: " + val);
+		//print("Just got val from the dice roll in Die: " + val);
+		return;
     }
 
-    public void Update()
+    void Update()
     {
-		// determine the value is the die is not rolling
+		// determine the value if the die is not rolling
         if (!rolling && localHit)
             GetValue();
-		print("Die says: " + val);
     }
 
 

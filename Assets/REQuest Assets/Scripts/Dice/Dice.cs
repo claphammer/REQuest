@@ -22,7 +22,8 @@ using System.Collections;
 public class Dice : Die {	
 
     public float rollSpeed = 0.25F;  // how many seconds pass between rolling the single dice
-    public static bool rolling = true;  // true when dice still rolling, checked with rigidBody.velocity and rigidBody.angularVelocity
+    public static bool diceRolling = true;  // true when dice still rolling, checked with rigidBody.velocity and rigidBody.angularVelocity
+	
 	//---
 	
     protected float rollTime = 0;  // keep rolling time to determine when die to be rolled
@@ -31,6 +32,11 @@ public class Dice : Die {
     private static ArrayList rollQueue = new ArrayList();  	// reference to the dice that have to be rolled
 	private static ArrayList allDice = new ArrayList();  	// reference to all dice, created by Dice.Roll
     private static ArrayList rollingDice = new ArrayList();  // reference to the dice that are rolling
+	private static bool valPassedToPlayer = false;
+	private static GameController game;
+	
+	
+	
 
 	private string _color = "red";
 /*	
@@ -55,33 +61,26 @@ public class Dice : Die {
 	*/
     // dertermine random rolling force
     private GameObject spawnPoint = null;
+	
+	public void Start()
+	{
+		game = GetComponent<GameController>();
+	}
+	
     private Vector3 Force()
     {
         Vector3 rollTarget = Vector3.zero + new Vector3(2 + 7 * Random.value, .5F + 4 * Random.value, -2 - 3 * Random.value);
         return Vector3.Lerp(spawnPoint.transform.position, rollTarget, 1).normalized * (-35 - Random.value * 20);
     }
-
+	
 	public void UpdateRoll()
 	{
         spawnPoint = GameObject.Find("spawnPoint");
 		Clear();
         Roll("1d6", "d6-" + _color, spawnPoint.transform.position, Force());
     }
-	
-	void OnGUI()
-    {
-		if (GUI.Button (new Rect (20,Screen.height - 150,180,20), "Roll Dice")) 	
-		{
-			UpdateRoll();
-			print("Just called UpdateRoll from Dice.  Die val set and retrieved with die.val= " + base.val);
-		}
-        GUI.Box(new Rect( 20 , Screen.height - 35 , 180 , 20), "");
-		GUI.Label(new Rect(30, Screen.height - 35, 180, 20), AsString(""));
-					
 		
-	}
-	
-	/// This method will create/instance a prefab at a specific position with a specific rotation and a specific scale and assign a material
+	// This method will create/instance a prefab at a specific position with a specific rotation and a specific scale and assign a material
 	public static GameObject prefab(string name, Vector3 position, Vector3 rotation, Vector3 scale, string mat)
 	{		
 		// load the prefab from Resources
@@ -143,7 +142,7 @@ public class Dice : Die {
 	/// </summary>
 	public static void Roll(string dice, string mat, Vector3 spawnPoint, Vector3 force)
 	{
-        rolling = true;
+        diceRolling = true;
 		// sorting dice to lowercase for comparing purposes
 		dice = dice.ToLower();				
 		int count = 1;
@@ -202,9 +201,20 @@ public class Dice : Die {
             if (rDie.name == dieType || dieType == "")
                 v += rDie.die.val;
         }
-        return v;
+		
+		if (!diceRolling && !valPassedToPlayer)
+		{
+			valPassedToPlayer = true;
+			print("Player MaxMoves: " + game.selectedUnit.maxMoves);
+			game.selectedUnit.maxMoves = v;
+			print("Player MaxMoves updated to current die roll: " + game.selectedUnit.maxMoves);
+			game.selectedUnit.Reset(); // Reset selected Unit's CurrMoves to match new MaxMoves value
+			print("reset unit just called from Dice");
+		}
+		
+		return v;
     }
-
+	
 	/// <summary>
 	/// Get number of all ( dieType = "" ) dice or dieType specific dice.
 	/// </summary>
@@ -274,7 +284,8 @@ public class Dice : Die {
         allDice.Clear();
         rollingDice.Clear();
         rollQueue.Clear();
-        rolling = false;
+        diceRolling = false;
+		valPassedToPlayer = false;
 	}
 
 	/// <summary>
@@ -282,9 +293,7 @@ public class Dice : Die {
 	/// </summary>
     void Update()
     {
-		
-		
-        if (rolling)
+        if (diceRolling)
         {
 			// there are dice rolling so increment rolling time
             rollTime += Time.deltaTime;
@@ -312,15 +321,13 @@ public class Dice : Die {
                 {
 					// roll queue is empty so if no dice are rolling we can set the rolling attribute to false
                     if (!IsRolling())
-                        rolling = false;
+                        diceRolling = false;
                 }
         }
     }
 
-	/// <summary>
-	/// Check if there all dice have stopped rolling
-	/// </summary>
-    private bool IsRolling()
+	// Check if all dice have stopped rolling
+    public bool IsRolling()
     {
         int d = 0;
 		// loop rollingDice
@@ -328,7 +335,7 @@ public class Dice : Die {
         {
 			// if rolling die no longer rolling , remove it from rollingDice
             RollingDie rDie = (RollingDie)rollingDice[d];
-            if (!rDie.rolling)
+            if (!rDie.diceRolling)
                 rollingDice.Remove(rDie);
             else
                 d++;
@@ -338,9 +345,11 @@ public class Dice : Die {
     }
 }
 
-/// <summary>
-/// Supporting rolling die class to keep die information
-/// </summary>
+
+
+//--------
+// Supporting rolling die class to keep die information
+//--------
 class RollingDie
 {
 
@@ -353,7 +362,7 @@ class RollingDie
     public Vector3 force;					// die initial force impuls
 
 	// rolling attribute specifies if this die is still rolling
-    public bool rolling
+    public bool diceRolling
     {
         get
         {
@@ -361,14 +370,15 @@ class RollingDie
         }
     }
 
-    public int value
+    public int val
     {
         get
         {
             return die.val;
         }
     }
-
+	
+	
 	// constructor
     public RollingDie(GameObject gameObject, string name, string mat, Vector3 spawnPoint, Vector3 force)
     {

@@ -19,8 +19,6 @@ public class GameController : TMNController
 	public bool hideSelectorOnMove = true;		// hide the selection marker when a unit moves?
 	public bool hideMarkersOnMove = true;		// hide the node markers when a unit moves?
 	
-
-
 	#endregion
 	// ====================================================================================================================
 	#region vars
@@ -30,8 +28,6 @@ public class GameController : TMNController
 	private TileNode hoverNode = null;			// that that mouse is hovering over
 	private TileNode prevNode = null;			// helper during movement
 
-	
-	
 	public bool useTurns = false;				// allow "max moves" to be broken down into sub-moves without a reset
 	public Unit selectedUnit = null;			// currently selected unit
 	public bool allowInput { get; set; }
@@ -40,8 +36,7 @@ public class GameController : TMNController
 	
 	private _BartleManager bartle;
 	private Dice dice;
-	public Die die;
-	public int dieValue;
+	private Die die;
 	
 
 	//public int currPlayerTurn  { get; set; }	// which player's turn it is, only if useTurns = true;
@@ -57,9 +52,14 @@ public class GameController : TMNController
 		state = State.Init;
 		bartle = GetComponentInChildren<_BartleManager>();
 		bartle.ResetQuestions();
-		dice = gameObject.GetComponentInChildren<Dice>();
-		die = gameObject.GetComponentInChildren<Die>();
-
+		dice = GetComponent<Dice>();
+		die = GetComponent<Die>();
+		
+		if(turnNumber == 0)
+		{
+			selectedUnit.maxMoves = 0;
+			selectedUnit.currMoves = 0;
+		}
 	}
 	
 	private void SpawnUnit()
@@ -83,14 +83,12 @@ public class GameController : TMNController
 
 	public void Update()
 	{		
-		
 		if (state == State.Running)
 		{
 			// check if player clicked on tiles/units. 
 			// You could choose not to call this in certain frames,
 			// for example if your GUI handled the input this frame and you don't want the player 
 			// clicking 'through' GUI elements onto the tiles or units
-
 			if (allowInput) this.HandleInput();
 		}
 		else if (state == State.Init)
@@ -101,26 +99,18 @@ public class GameController : TMNController
 			SpawnUnit(); // Call SpawnUnit function
 			allowInput = true;
 		}
-		
-		if(turnNumber == 0)
-		{
-			selectedUnit.maxMoves = 0;
-			selectedUnit.currMoves = 0;
-		}
-
 	}
 	
-
-
 	#endregion
 	// ====================================================================================================================
 	#region pub
 	
-	public int DieValue(int dieValue)
+	public int DieValue()
     {
       //  get
        // {
             return die.val;
+
         //}
     }
 	
@@ -136,24 +126,24 @@ public class GameController : TMNController
 		}
 		else
 		{
-			// Roll Dice
+			// Simple Randomizer for Roll Dice
 			//selectedUnit.maxMoves = Random.Range(1,6);
 
 			dice.UpdateRoll();
 			
+	
+
+
 
 			
 			
 			
 			
-			
-			
-			
-			print("GameController says DieRoll is: " + dieValue);
-			//selectedUnit.maxMoves = die.val;
+
 		
 			// Reset call
 			selectedUnit.Reset(); // Reset selected Unit's CurrMoves to match new MaxMoves value
+			print("reset unit just called from gamecontroller change turn");
 							
 			//
 			turnNumber++;
