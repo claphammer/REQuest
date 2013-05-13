@@ -22,7 +22,7 @@ public class NaviUnit : MonoBehaviour
 	// ====================================================================================================================
 	#region vars
 	
-	public CameraMove camMover;							// used to move the camera around (like make it follow a transform)
+	//public CameraMove camMover;							// used to move the camera around (like make it follow a transform)
 	public MapNav mapnav { get; set; }					// the MapNav this unit is on
 	public TileNode node { get; set; }					// node that this unit is currently standing on
 

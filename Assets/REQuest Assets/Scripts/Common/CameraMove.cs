@@ -53,6 +53,12 @@ public class CameraMove : MonoBehaviour
 		}
 	}
 
+	
+	
+	/// <summary>
+	/// Lates the update.
+	/// </summary>LOOK HERE FOR ROTATION BINDING?
+	/// 
 	void LateUpdate()
 	{
 		if (target && followTarget)

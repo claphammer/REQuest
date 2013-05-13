@@ -141,7 +141,7 @@ public class GameController : TMNController
 				if (hideSelectorOnMove) selectionMarker.Hide();
 
 				// camera should follow the unit that is moving
-				//camMover.Follow(selectedUnit.transform);
+				camMover.Follow(selectedUnit.transform);			//WC
 				
 				//insert Bartle Launch Sequence
 				if(turnNumber != 0 && (turnNumber & 1) == 0)
@@ -195,7 +195,7 @@ public class GameController : TMNController
 		Unit unit = go.GetComponent<Unit>();
 		
 		// jump camera to the unit that was clicked on (is selected)
-		camMover.Follow(go.transform);
+		camMover.Follow(go.transform);										//WC
 
 
 			bool changeUnit = true;
