@@ -45,12 +45,12 @@ public abstract class TMNController : MonoBehaviour
 	#endregion
 	// ====================================================================================================================
 	#region update/input
-
+	
 	/// <summary>Call this every frame to handle input (detect clicks on units and tiles)</summary>
 	protected void HandleInput()
 	{
-		// only continue if left-mouse-click detected or if a unit is currently selected
-		//if (!Input.GetMouseButtonUp(0) && _selectedUnitGo == null) return;
+
+		OnNaviUnitClick(_selectedUnitGo);  //*** call the unit click method passing it the already selected unit...Not the raycast listener
 
 		bool unselect = (Input.GetMouseButtonUp(0) ? true : false);
 
@@ -61,8 +61,8 @@ public abstract class TMNController : MonoBehaviour
 			// *** Ray hit a Tile
 			if (hit.collider.gameObject.layer == map.tilesLayer)
 			{
-				if (Input.GetMouseButtonUp(0))
-				{	// mouse-click/touch detected
+				if (Input.GetMouseButtonUp(0))  // mouse-click/touch detected
+				{	
 					unselect = false;
 					OnTileNodeClick(hit.collider.gameObject);
 				}
@@ -75,7 +75,7 @@ public abstract class TMNController : MonoBehaviour
 			{
 				OnTileNodeHover(null);
 			}
-
+			/*
 			// *** Raycast hit a Unit
 			if (hit.collider.gameObject.layer == this.unitsLayer)
 			{
@@ -87,14 +87,14 @@ public abstract class TMNController : MonoBehaviour
 					if (_selectedUnitGo != null)
 					{
 						OnTileNodeHover(null);
-						//OnClearNaviUnitSelection(hit.collider.gameObject);
+						OnClearNaviUnitSelection(hit.collider.gameObject);
 					}
 
 					// select clicked unit
 					OnNaviUnitClick(hit.collider.gameObject);
 				}
 			}
-			
+			*/
 		}
 		else if (_hoverNodeGo != null)
 		{
@@ -104,7 +104,6 @@ public abstract class TMNController : MonoBehaviour
 		if (unselect)
 		{
 			OnTileNodeHover(null);
-			//OnClearNaviUnitSelection(null);
 		}
 	}
 
@@ -130,6 +129,8 @@ public abstract class TMNController : MonoBehaviour
 
 	/// <summary>Handles unit unselect</summary>
 	//protected virtual void OnClearNaviUnitSelection(GameObject clickedAnotherUnit)
+	
+/*	
 	protected virtual void OnClearNaviUnitSelection(GameObject unitGo)
 	{
 		//_selectedUnitGo = null;
@@ -137,7 +138,7 @@ public abstract class TMNController : MonoBehaviour
 		_selectedUnitGo = unitGo;											// THIS activates the player
 		print(_selectedUnitGo);
 	}
-
+*/
 	#endregion
 	// ====================================================================================================================
 }

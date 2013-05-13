@@ -100,23 +100,18 @@ public class GameController : TMNController
 	
 	public void ChangeTurn(bool changeTurn)  //cycle turn moves even for single player
 	{	
-		
-		
 		//Check if currMoves = 0. If not: roll die and update
 		if(selectedUnit.currMoves != 0)
 		{
-			//do nothing
+								//do nothing
 		}
 		else
 		{
 			dice.UpdateRoll();  //call the dice roll class --> it handles updating the selectedUnit.maxMoves
-		
-
-
 		}
 	}
 
-	
+
 	#endregion
 	// ====================================================================================================================
 	#region input handlers - click tile
@@ -143,13 +138,11 @@ public class GameController : TMNController
 				// camera should follow the unit that is moving
 				camMover.Follow(selectedUnit.transform);			//WC
 				
-				//insert Bartle Launch Sequence
+				//insert Bartle Launch Sequence if the turn# is EVEN and not 0
 				if(turnNumber != 0 && (turnNumber & 1) == 0)
 				{
-					print("I am launching Dialog Manager");
 					bartle.QuestionPicker();
 				}
-				
 			}
 		}
 	}
