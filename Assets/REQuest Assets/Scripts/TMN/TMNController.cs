@@ -49,10 +49,7 @@ public abstract class TMNController : MonoBehaviour
 	/// <summary>Call this every frame to handle input (detect clicks on units and tiles)</summary>
 	protected void HandleInput()
 	{
-
 		OnNaviUnitClick(_selectedUnitGo);  //*** call the unit click method passing it the already selected unit...Not the raycast listener
-
-		bool unselect = (Input.GetMouseButtonUp(0) ? true : false);
 
 		Ray ray = rayCam.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
@@ -63,7 +60,6 @@ public abstract class TMNController : MonoBehaviour
 			{
 				if (Input.GetMouseButtonUp(0))  // mouse-click/touch detected
 				{	
-					unselect = false;
 					OnTileNodeClick(hit.collider.gameObject);
 				}
 				else
@@ -75,36 +71,11 @@ public abstract class TMNController : MonoBehaviour
 			{
 				OnTileNodeHover(null);
 			}
-			/*
-			// *** Raycast hit a Unit
-			if (hit.collider.gameObject.layer == this.unitsLayer)
-			{
-				if (Input.GetMouseButtonUp(0))
-				{	// mouse-click/touch on the unit
-					unselect = false;
-
-					// first clear any previous selection
-					if (_selectedUnitGo != null)
-					{
-						OnTileNodeHover(null);
-						OnClearNaviUnitSelection(hit.collider.gameObject);
-					}
-
-					// select clicked unit
-					OnNaviUnitClick(hit.collider.gameObject);
-				}
-			}
-			*/
 		}
 		else if (_hoverNodeGo != null)
 		{
 			OnTileNodeHover(null);
 		}		
-
-		if (unselect)
-		{
-			OnTileNodeHover(null);
-		}
 	}
 
 	// ====================================================================================================================
@@ -124,21 +95,9 @@ public abstract class TMNController : MonoBehaviour
 	public virtual void OnNaviUnitClick(GameObject unitGo)
 	{
 		_selectedUnitGo = unitGo;											// THIS activates the player
-		print(_selectedUnitGo);
+		//print(_selectedUnitGo);
 	}
 
-	/// <summary>Handles unit unselect</summary>
-	//protected virtual void OnClearNaviUnitSelection(GameObject clickedAnotherUnit)
-	
-/*	
-	protected virtual void OnClearNaviUnitSelection(GameObject unitGo)
-	{
-		//_selectedUnitGo = null;
-		print(_selectedUnitGo);
-		_selectedUnitGo = unitGo;											// THIS activates the player
-		print(_selectedUnitGo);
-	}
-*/
 	#endregion
 	// ====================================================================================================================
 }

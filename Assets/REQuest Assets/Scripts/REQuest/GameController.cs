@@ -53,6 +53,14 @@ public class GameController : TMNController
 			selectedUnit.maxMoves = 0;
 			selectedUnit.currMoves = 0;
 		}
+		if (state == State.Init)
+		{
+			print(state);
+			state = State.Running;
+			print(state);
+			SpawnUnit(); // Call SpawnUnit function
+			allowInput = true;
+		}
 	}
 	
 	private void SpawnUnit()
@@ -75,22 +83,10 @@ public class GameController : TMNController
 	#region update/input
 
 	public void Update()
-	{		
-		if (state == State.Running)
+	{	
+		if (allowInput && state == State.Running)
 		{
-			// check if player clicked on tiles/units. 
-			// You could choose not to call this in certain frames,
-			// for example if your GUI handled the input this frame and you don't want the player 
-			// clicking 'through' GUI elements onto the tiles or units
-			if (allowInput) this.HandleInput();
-		}
-		else if (state == State.Init)
-		{
-			print(state);
-			state = State.Running;
-			print(state);
-			SpawnUnit(); // Call SpawnUnit function
-			allowInput = true;
+			this.HandleInput();
 		}
 	}
 	
@@ -110,7 +106,6 @@ public class GameController : TMNController
 			dice.UpdateRoll();  //call the dice roll class --> it handles updating the selectedUnit.maxMoves
 		}
 	}
-
 
 	#endregion
 	// ====================================================================================================================
@@ -205,8 +200,6 @@ public class GameController : TMNController
 			}
 	}
 
-	
-	
 	#endregion
 	// ====================================================================================================================
 	#region callbacks
