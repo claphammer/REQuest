@@ -10,7 +10,7 @@ public class CameraMove : MonoBehaviour
 {
 	public float speed = 10f;
 	public Transform target;			// target to follow (cam is fixed to following this around till it is NULL)
-	public bool followTarget = false;	// follow the target? (only if target is not NULL)
+	public bool followTarget = true;	// follow the target? (only if target is not NULL)
 	public bool allowInput = true;		// the cam wont read keyinput if set to false
 	public Transform camTr;
 	public Vector2 min_xz;
@@ -22,8 +22,7 @@ public class CameraMove : MonoBehaviour
 		tr = this.transform;
 		if (target && followTarget) tr.position = target.position;
 		
-		//target = t;				//wc
-		followTarget = true;	//wc
+	
 		
 	}
 
@@ -40,7 +39,7 @@ public class CameraMove : MonoBehaviour
 			tr.position = Vector3.Slerp(tr.position, target.position, Time.deltaTime * Mathf.Clamp(difference.magnitude, 0f, 2f));
 		}
 	}
-/*
+
 	public void Follow(bool doFollowCurrentTarget)
 	{
 		followTarget = doFollowCurrentTarget;
@@ -51,6 +50,6 @@ public class CameraMove : MonoBehaviour
 		target = t;
 		followTarget = true;
 	}
-*/
+
 	// ====================================================================================================================
 }
