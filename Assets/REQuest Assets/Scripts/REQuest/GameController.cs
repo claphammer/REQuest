@@ -54,13 +54,7 @@ public class GameController : TMNController
 		}
 		if (state == State.Init)
 		{
-<<<<<<< HEAD
-			print(state);
 			state = State.Running;
-			print(state);
-=======
-			state = State.Running;
->>>>>>> WC_working
 			SpawnUnit(); // Call SpawnUnit function
 			allowInput = true;
 		}
@@ -86,17 +80,10 @@ public class GameController : TMNController
 	#region update/input
 
 	public void Update()
-<<<<<<< HEAD
-	{	
-		if (allowInput && state == State.Running)
-		{
-			this.HandleInput();
-=======
 	{		
 		if (allowInput && state == State.Running)
 		{
 			this.HandleInput();  // check if player clicked on tiles
->>>>>>> WC_working
 		}
 	}
 	
@@ -116,10 +103,6 @@ public class GameController : TMNController
 		}
 	}
 
-<<<<<<< HEAD
-	#endregion
-=======
->>>>>>> WC_working
 	// ====================================================================================================================
 	#region input handlers - click tile
 

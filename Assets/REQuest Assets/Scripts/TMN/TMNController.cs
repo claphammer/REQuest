@@ -53,10 +53,6 @@ public abstract class TMNController : MonoBehaviour
 			{
 				if (Input.GetMouseButtonUp(0))  // mouse-click/touch detected
 				{	
-<<<<<<< HEAD
-=======
-					//unselect = false;
->>>>>>> WC_working
 					OnTileNodeClick(hit.collider.gameObject);
 				}
 				else
@@ -69,13 +65,6 @@ public abstract class TMNController : MonoBehaviour
 				OnTileNodeHover(null);
 			}
 		}
-<<<<<<< HEAD
-		else if (_hoverNodeGo != null)
-		{
-			OnTileNodeHover(null);
-		}		
-=======
->>>>>>> WC_working
 	}
 
 	// ====================================================================================================================
@@ -94,18 +83,8 @@ public abstract class TMNController : MonoBehaviour
 	/// <summary>Handles unit clicks</summary>
 	public virtual void OnNaviUnitClick(GameObject unitGo)
 	{
-<<<<<<< HEAD
-		_selectedUnitGo = unitGo;											// THIS activates the player
-		//print(_selectedUnitGo);
-	}
-
-	#endregion
-=======
 		_selectedUnitGo = unitGo;
 		print("NaviUnitClick says i am: " + _selectedUnitGo);
 	}
-
-
->>>>>>> WC_working
 	// ====================================================================================================================
 }
