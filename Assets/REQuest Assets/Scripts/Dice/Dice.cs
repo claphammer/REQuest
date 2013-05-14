@@ -75,7 +75,7 @@ public class Dice : Die {
 	
 	public void UpdateRoll()
 	{
-        spawnPoint = GameObject.Find("spawnPoint");
+        spawnPoint = GameObject.Find("DiceSpawnPoint");
 		Clear();
         Roll("1d6", "d6-" + _color, spawnPoint.transform.position, Force());
     }
