@@ -44,8 +44,6 @@ public abstract class TMNController : MonoBehaviour
 	{
 		OnNaviUnitClick(_selectedUnitGo);  //*** call the unit click method passing it the already selected unit...Not the raycast listener
 
-		//bool unselect = (Input.GetMouseButtonUp(0) ? true : false);
-
 		Ray ray = rayCam.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 500f, _rayMask))

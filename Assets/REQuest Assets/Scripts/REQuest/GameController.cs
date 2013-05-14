@@ -52,6 +52,12 @@ public class GameController : TMNController
 			selectedUnit.maxMoves = 0;
 			selectedUnit.currMoves = 0;
 		}
+		if (state == State.Init)
+		{
+			state = State.Running;
+			SpawnUnit(); // Call SpawnUnit function
+			allowInput = true;
+		}
 	}
 	
 	private void SpawnUnit()
@@ -75,16 +81,9 @@ public class GameController : TMNController
 
 	public void Update()
 	{		
-		if (state == State.Running)
+		if (allowInput && state == State.Running)
 		{
-			// check if player clicked on tiles 
-			if (allowInput) this.HandleInput();
-		}
-		else if (state == State.Init)
-		{
-			state = State.Running;
-			SpawnUnit(); // Call SpawnUnit function
-			allowInput = true;
+			this.HandleInput();  // check if player clicked on tiles
 		}
 	}
 	
@@ -123,11 +122,10 @@ public class GameController : TMNController
 				// the destination node by now. So use the cached node ref
 				if (hideMarkersOnMove) prevNode.ShowNeighbours(((Unit)selectedUnit).maxMoves, false);
 
-				
 				if (hideSelectorOnMove) selectionMarker.Hide();  // hide the selector
 
 				// camera should follow the unit that is moving
-			camMover.Follow(selectedUnit.transform);			//CHECK HERE for camera rotation insertion?
+				camMover.Follow(selectedUnit.transform);			//CHECK HERE for camera rotation insertion?
 				
 				//insert Bartle Launch Sequence if the turn# is EVEN and not 0
 				if(turnNumber != 0 && (turnNumber & 1) == 0)
