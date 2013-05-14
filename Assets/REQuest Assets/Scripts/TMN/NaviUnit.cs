@@ -265,15 +265,6 @@ public class NaviUnit : MonoBehaviour
 				}
 			}
 			
-			//if (!isFine)
-			//{
-				// will wait a bit and then try to move again
-				//isDelayed = true;
-				//delayTimer = 0.1f;
-				//OnMovementDelayed();
-				//return;
-			//}
-
 			// unlink with current node and link with destination node
 			node.units.Remove(this);
 			node = followPath[followIdx];

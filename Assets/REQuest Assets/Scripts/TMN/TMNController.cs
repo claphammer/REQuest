@@ -9,23 +9,18 @@ using UnityEngine;
 public abstract class TMNController : MonoBehaviour 
 {
 	// ====================================================================================================================
-	#region inspector properties
 
 	public Camera rayCam;	// the main game camera should be linked here
 	public MapNav map;		// the MapNav used with this controller
 	public int unitsLayer=21;	// on what layer is units
 
-	#endregion
 	// ====================================================================================================================
-	#region vars
 
 	private GameObject _selectedUnitGo = null;	// the currently selected unit
 	private GameObject _hoverNodeGo = null;		// node that mouse is hovering over
 	private LayerMask _rayMask = 0;				// used to determine what can be clicked on (Tiles and Units) Inited in Start()
 
-	#endregion
 	// ====================================================================================================================
-	#region start/init
 
 	public virtual void Start()
 	{
@@ -39,20 +34,17 @@ public abstract class TMNController : MonoBehaviour
 			if (map == null) Debug.LogError("Could not find a MapNav in the scene. You gonna get NullRef errors soon!");
 		}
 
-		_rayMask = (1<<map.tilesLayer | 1<<this.unitsLayer);  // -WC: add a gui layer here for gui handling??
+		_rayMask = (1<<map.tilesLayer);
 	}
 	
-	#endregion
 	// ====================================================================================================================
-	#region update/input
 	
-	/// <summary>Call this every frame to handle input (detect clicks on units and tiles)</summary>
+	//Call this every frame to handle input - For Tiles only now.
 	protected void HandleInput()
 	{
-
 		OnNaviUnitClick(_selectedUnitGo);  //*** call the unit click method passing it the already selected unit...Not the raycast listener
 
-		bool unselect = (Input.GetMouseButtonUp(0) ? true : false);
+		//bool unselect = (Input.GetMouseButtonUp(0) ? true : false);
 
 		Ray ray = rayCam.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
@@ -63,7 +55,7 @@ public abstract class TMNController : MonoBehaviour
 			{
 				if (Input.GetMouseButtonUp(0))  // mouse-click/touch detected
 				{	
-					unselect = false;
+					//unselect = false;
 					OnTileNodeClick(hit.collider.gameObject);
 				}
 				else
@@ -75,35 +67,6 @@ public abstract class TMNController : MonoBehaviour
 			{
 				OnTileNodeHover(null);
 			}
-			/*
-			// *** Raycast hit a Unit
-			if (hit.collider.gameObject.layer == this.unitsLayer)
-			{
-				if (Input.GetMouseButtonUp(0))
-				{	// mouse-click/touch on the unit
-					unselect = false;
-
-					// first clear any previous selection
-					if (_selectedUnitGo != null)
-					{
-						OnTileNodeHover(null);
-						OnClearNaviUnitSelection(hit.collider.gameObject);
-					}
-
-					// select clicked unit
-					OnNaviUnitClick(hit.collider.gameObject);
-				}
-			}
-			*/
-		}
-		else if (_hoverNodeGo != null)
-		{
-			OnTileNodeHover(null);
-		}		
-
-		if (unselect)
-		{
-			OnTileNodeHover(null);
 		}
 	}
 
@@ -123,22 +86,10 @@ public abstract class TMNController : MonoBehaviour
 	/// <summary>Handles unit clicks</summary>
 	public virtual void OnNaviUnitClick(GameObject unitGo)
 	{
-		_selectedUnitGo = unitGo;											// THIS activates the player
-		print(_selectedUnitGo);
+		_selectedUnitGo = unitGo;
+		print("NaviUnitClick says i am: " + _selectedUnitGo);
 	}
 
-	/// <summary>Handles unit unselect</summary>
-	//protected virtual void OnClearNaviUnitSelection(GameObject clickedAnotherUnit)
-	
-/*	
-	protected virtual void OnClearNaviUnitSelection(GameObject unitGo)
-	{
-		//_selectedUnitGo = null;
-		print(_selectedUnitGo);
-		_selectedUnitGo = unitGo;											// THIS activates the player
-		print(_selectedUnitGo);
-	}
-*/
-	#endregion
+
 	// ====================================================================================================================
 }

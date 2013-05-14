@@ -15,7 +15,6 @@ public class GameController : TMNController
 	public CameraMove camMover;					// used to move camera around (like make it follow a transform)
 	public SelectionIndicator selectionMarker;	// used to indicate which unit is active/selected
 	public GameObject playerChar;				// SINGLE unit prefab	
-	public TileNode playerSpawnPoint;			// the tile where the unit will start
 	public bool hideSelectorOnMove = true;		// hide the selection marker when a unit moves?
 	public bool hideMarkersOnMove = true;		// hide the node markers when a unit moves?
 	
@@ -78,17 +77,12 @@ public class GameController : TMNController
 	{		
 		if (state == State.Running)
 		{
-			// check if player clicked on tiles/units. 
-			// You could choose not to call this in certain frames,
-			// for example if your GUI handled the input this frame and you don't want the player 
-			// clicking 'through' GUI elements onto the tiles or units
+			// check if player clicked on tiles 
 			if (allowInput) this.HandleInput();
 		}
 		else if (state == State.Init)
 		{
-			print(state);
 			state = State.Running;
-			print(state);
 			SpawnUnit(); // Call SpawnUnit function
 			allowInput = true;
 		}
@@ -96,7 +90,6 @@ public class GameController : TMNController
 	
 	#endregion
 	// ====================================================================================================================
-	#region pub
 	
 	public void ChangeTurn(bool changeTurn)  //cycle turn moves even for single player
 	{	
@@ -111,8 +104,6 @@ public class GameController : TMNController
 		}
 	}
 
-
-	#endregion
 	// ====================================================================================================================
 	#region input handlers - click tile
 
@@ -132,11 +123,11 @@ public class GameController : TMNController
 				// the destination node by now. So use the cached node ref
 				if (hideMarkersOnMove) prevNode.ShowNeighbours(((Unit)selectedUnit).maxMoves, false);
 
-				// hide the selector
-				if (hideSelectorOnMove) selectionMarker.Hide();
+				
+				if (hideSelectorOnMove) selectionMarker.Hide();  // hide the selector
 
 				// camera should follow the unit that is moving
-				camMover.Follow(selectedUnit.transform);			//WC
+				camMover.Follow(selectedUnit.transform);			//CHECK HERE for camera rotation insertion?
 				
 				//insert Bartle Launch Sequence if the turn# is EVEN and not 0
 				if(turnNumber != 0 && (turnNumber & 1) == 0)
@@ -223,7 +214,7 @@ public class GameController : TMNController
 			}
 
 			// do a fake click on the unit to "select" it again
-			this.OnNaviUnitClick(unit.gameObject);
+			//this.OnNaviUnitClick(unit.gameObject);
 			allowInput = true; // allow input again
 		}
 	}
