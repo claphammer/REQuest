@@ -36,7 +36,6 @@ public class CameraMove : MonoBehaviour
 			Vector3 difference = target.position - tr.position;
 			tr.position = Vector3.Slerp(tr.position, target.position, Time.deltaTime * Mathf.Clamp(difference.magnitude, 0f, 2f));
 			tr.rotation = Quaternion.Slerp(tr.rotation, target.rotation, Time.deltaTime * speed);									//wc
-			print("I love to rotate " + tr.rotation);
 		}
 	}
 
