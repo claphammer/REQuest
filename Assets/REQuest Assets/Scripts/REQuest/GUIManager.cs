@@ -17,7 +17,6 @@ public class GUIManager : MonoBehaviour
 	private Inventory inv;
 	private QuestLog quest;
 	private GameController game;
-	//private Dice dice;
 	private Rect winRect1 = new Rect(10f, 10f, 200f, 80f);
 	
 	void Start()
@@ -25,7 +24,6 @@ public class GUIManager : MonoBehaviour
 		game = GetComponent<GameController>();
 		inv = GetComponent<Inventory>();
 		quest = GetComponent<QuestLog>();
-		//dice = GetComponent<Dice>();
 	}
 
 	void OnGUI()

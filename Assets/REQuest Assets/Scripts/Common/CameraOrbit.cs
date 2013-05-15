@@ -5,17 +5,18 @@
 // ====================================================================================================================
 
 using UnityEngine;
-
+using System.Collections;
 public class CameraOrbit : MonoBehaviour 
 {
     public Transform pivot;							// the object being followed
 	public Vector3 pivotOffset = Vector3.zero;		// offset from target's pivot
-	public Transform target;						// like a selected object (used with checking if objects between cam and target)
+	public GameController game;
+	private bool gameBusy = false;
 
-	public float distance = 6f; // distance from target (used with zoom)
-	public float minDistance = 2f;
-	public float maxDistance = 15f;
-	public float zoomSpeed = 1f;
+	public float distance = 6f; // CURR distance from target (used with zoom)
+	public float minDistance = 2f; // MIN distance from target (used with zoom)
+	public float maxDistance = 15f; // MAX distance from target (used with zoom)
+	public float zoomSpeed = 1f; 
 
     public float xSpeed = 250.0f;
     public float ySpeed = 120.0f;
@@ -30,7 +31,7 @@ public class CameraOrbit : MonoBehaviour
 
     private float x = 0.0f;
     private float y = 0.0f;
-
+	
 	private float targetX = 0f;
 	private float targetY = 0f;
 	private float targetDistance = 0f;
@@ -40,54 +41,98 @@ public class CameraOrbit : MonoBehaviour
 
     void Start()
     {
-        var angles = transform.eulerAngles;
-        targetX = x = angles.x;
+    	var angles = transform.eulerAngles;
+		targetX = x = angles.x;
 		targetY = y = ClampAngle(angles.y, yMinLimit, yMaxLimit);
 		targetDistance = distance;
+		game = (GameController)GetComponent<GameController>();
+		gameBusy = false;
+		
+
     }
 
     void Update()
     {
-        if (pivot)
+        if (pivot) //if a CamPivot is selected
         {
-			// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-			// scroll wheel used to zoom in/out
+			// scroll wheel used to zoom in/out -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 			float scroll = Input.GetAxis("Mouse ScrollWheel");
 
 			if (scroll > 0.0f) targetDistance -= zoomSpeed;
 			else if (scroll < 0.0f) targetDistance += zoomSpeed;
 			targetDistance = Mathf.Clamp(targetDistance, minDistance, maxDistance);
-
 			// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-			// right mouse button must be held down to tilt/rotate cam
-			// or player can use the left mouse button while holding Ctr
-			if (Input.GetMouseButton(1) || (Input.GetMouseButton(0) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) ))
-            {
-                if (allowXRot)
-				{
-					targetX -= Input.GetAxis("Mouse X") * xSpeed * 0.02f;
-					targetX = ClampAngle(targetX, xMinLimit,xMaxLimit);
+			
+			if (!gameBusy)
+			{
+				// right mouse button must be held down to tilt/rotate cam or player can use the left mouse button while holding Ctr
+				if (Input.GetMouseButton(1) || (Input.GetMouseButton(0) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) ))
+         	   	{
+              	 	if (allowXRot)
+					{
+						targetX -= Input.GetAxis("Mouse X") * xSpeed * 0.02f;
+						targetX = ClampAngle(targetX, xMinLimit,xMaxLimit);
+					}
+					if (allowYTilt)
+					{
+						targetY -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
+						targetY = ClampAngle(targetY, yMinLimit, yMaxLimit);
+					}
 				}
-				if (allowYTilt)
-				{
-					targetY -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
-					targetY = ClampAngle(targetY, yMinLimit, yMaxLimit);
-				}
-            }
+				
+				x = Mathf.SmoothDampAngle(x, targetX, ref xVelocity, 0.3f);
+				if (allowYTilt) y = Mathf.SmoothDampAngle(y, targetY, ref yVelocity, 0.3f);
+				else y = targetY;
+				Quaternion rotation = Quaternion.Euler(y, x, 0);
+				distance = Mathf.SmoothDamp(distance, targetDistance, ref zoomVelocity, 0.5f);
+
+				// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+				// apply
+
+				Vector3 position = rotation * new Vector3(0.0f, 0.0f, -distance) + pivot.position + pivotOffset;
+				transform.rotation = rotation;
+				transform.position = position;
+			}
+			else
+			{
+				x = targetX;
+				y = targetY;
+				Quaternion rotation = Quaternion.Euler(y, x, 0);
+				distance = Mathf.SmoothDamp(distance, targetDistance, ref zoomVelocity, 0.5f);
+
+				// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+				// apply
+
+				Vector3 position = rotation * new Vector3(0.0f, 0.0f, -distance) + pivot.position + pivotOffset;
+				transform.rotation = rotation;
+				transform.position = position;
+			}
+					
+		}
+	}
+
+/*
+	void LateUpdate()  //WC test area
+	{
+		if (pivot)
+		{
 			x = Mathf.SmoothDampAngle(x, targetX, ref xVelocity, 0.3f);
-			if (allowYTilt) y = Mathf.SmoothDampAngle(y, targetY, ref yVelocity, 0.3f);
-			else y = targetY;
+			y = targetY;
 			Quaternion rotation = Quaternion.Euler(y, x, 0);
 			distance = Mathf.SmoothDamp(distance, targetDistance, ref zoomVelocity, 0.5f);
-
-			// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-			// apply
+			
+			//**apply and check
 			Vector3 position = rotation * new Vector3(0.0f, 0.0f, -distance) + pivot.position + pivotOffset;
 			transform.rotation = rotation;
+			print("LATE targetX: " + targetX);
+			print("LATE pivX: " + pivX);
+			print("LATE: " + rotation);
 			transform.position = position;
-
-        }
-    }
+			print("LATE: " + position);
+		}
+		
+	}
+*/
 
 	private float ClampAngle(float angle, float min, float max)
 	{
@@ -95,6 +140,6 @@ public class CameraOrbit : MonoBehaviour
 		if (angle > 360) angle -= 360;
 		return Mathf.Clamp(angle, min, max);
 	}
-
+	 
 	// ====================================================================================================================
 }
