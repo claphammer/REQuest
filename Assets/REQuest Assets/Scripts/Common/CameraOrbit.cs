@@ -10,8 +10,10 @@ public class CameraOrbit : MonoBehaviour
 {
     public Transform pivot;							// the object being followed
 	public Vector3 pivotOffset = Vector3.zero;		// offset from target's pivot
-	public GameController game;
-	private bool gameBusy = false;
+
+	//public GameController game;
+	//private bool gameBusy = false;
+
 
 	public float distance = 6f; // CURR distance from target (used with zoom)
 	public float minDistance = 2f; // MIN distance from target (used with zoom)
@@ -32,6 +34,8 @@ public class CameraOrbit : MonoBehaviour
     private float x = 0.0f;
     private float y = 0.0f;
 	
+
+	private float pivX;
 	private float targetX = 0f;
 	private float targetY = 0f;
 	private float targetDistance = 0f;
@@ -41,12 +45,13 @@ public class CameraOrbit : MonoBehaviour
 
     void Start()
     {
+
+		pivX = pivot.transform.eulerAngles.x;
     	var angles = transform.eulerAngles;
 		targetX = x = angles.x;
 		targetY = y = ClampAngle(angles.y, yMinLimit, yMaxLimit);
 		targetDistance = distance;
-		game = (GameController)GetComponent<GameController>();
-		gameBusy = false;
+		//game = (GameController)GetComponent<GameController>();
 		CamBoundToPlayer();
     }
 	
@@ -60,6 +65,8 @@ public class CameraOrbit : MonoBehaviour
 			if (scroll > 0.0f) targetDistance -= zoomSpeed;
 			else if (scroll < 0.0f) targetDistance += zoomSpeed;
 			targetDistance = Mathf.Clamp(targetDistance, minDistance, maxDistance);
+			//ZoomToPlayer(); //wc
+			
 			// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 			
 			/*
@@ -105,7 +112,21 @@ public class CameraOrbit : MonoBehaviour
 		
 	void CamBoundToPlayer()
 	{
+
 		x = targetX;
+		y = targetY;
+		Quaternion rotation = Quaternion.Euler(y, x, 0);
+		distance = Mathf.SmoothDamp(distance, targetDistance, ref zoomVelocity, 0.5f);
+
+		Vector3 position = rotation * new Vector3(0.0f, 0.0f, -distance) + pivot.position + pivotOffset;
+		transform.rotation = rotation;
+		transform.position = position;
+	}
+	
+	void ZoomToPlayer()
+	{
+		
+		x = pivX;
 		y = targetY;
 		Quaternion rotation = Quaternion.Euler(y, x, 0);
 		distance = Mathf.SmoothDamp(distance, targetDistance, ref zoomVelocity, 0.5f);
