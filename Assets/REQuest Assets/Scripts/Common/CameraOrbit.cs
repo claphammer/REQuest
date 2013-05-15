@@ -61,7 +61,7 @@ public class CameraOrbit : MonoBehaviour
 			if (scroll > 0.0f) targetDistance -= zoomSpeed;
 			else if (scroll < 0.0f) targetDistance += zoomSpeed;
 			targetDistance = Mathf.Clamp(targetDistance, minDistance, maxDistance);
-			ZoomToPlayer(); //wc
+			//ZoomToPlayer(); //wc
 			// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 			
 			/*
