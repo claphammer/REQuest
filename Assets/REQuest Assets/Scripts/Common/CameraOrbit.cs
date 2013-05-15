@@ -5,7 +5,7 @@
 // ====================================================================================================================
 
 using UnityEngine;
-using System.Collections;
+//using System.Collections;
 public class CameraOrbit : MonoBehaviour 
 {
     public Transform pivot;							// the object being followed
@@ -47,10 +47,9 @@ public class CameraOrbit : MonoBehaviour
 		targetDistance = distance;
 		game = (GameController)GetComponent<GameController>();
 		gameBusy = false;
-		
-
+		CamBoundToPlayer();
     }
-
+	
     void Update()
     {
         if (pivot) //if a CamPivot is selected
@@ -63,6 +62,7 @@ public class CameraOrbit : MonoBehaviour
 			targetDistance = Mathf.Clamp(targetDistance, minDistance, maxDistance);
 			// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 			
+			/*
 			if (!gameBusy)
 			{
 				// right mouse button must be held down to tilt/rotate cam or player can use the left mouse button while holding Ctr
@@ -95,45 +95,26 @@ public class CameraOrbit : MonoBehaviour
 			}
 			else
 			{
-				x = targetX;
-				y = targetY;
-				Quaternion rotation = Quaternion.Euler(y, x, 0);
-				distance = Mathf.SmoothDamp(distance, targetDistance, ref zoomVelocity, 0.5f);
-
-				// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-				// apply
-
-				Vector3 position = rotation * new Vector3(0.0f, 0.0f, -distance) + pivot.position + pivotOffset;
-				transform.rotation = rotation;
-				transform.position = position;
-			}
+			*/
+			//CamBoundToPlayer();
+			//}
 					
 		}
+	
 	}
-
-/*
-	void LateUpdate()  //WC test area
-	{
-		if (pivot)
-		{
-			x = Mathf.SmoothDampAngle(x, targetX, ref xVelocity, 0.3f);
-			y = targetY;
-			Quaternion rotation = Quaternion.Euler(y, x, 0);
-			distance = Mathf.SmoothDamp(distance, targetDistance, ref zoomVelocity, 0.5f);
-			
-			//**apply and check
-			Vector3 position = rotation * new Vector3(0.0f, 0.0f, -distance) + pivot.position + pivotOffset;
-			transform.rotation = rotation;
-			print("LATE targetX: " + targetX);
-			print("LATE pivX: " + pivX);
-			print("LATE: " + rotation);
-			transform.position = position;
-			print("LATE: " + position);
-		}
 		
-	}
-*/
+	void CamBoundToPlayer()
+	{
+		x = targetX;
+		y = targetY;
+		Quaternion rotation = Quaternion.Euler(y, x, 0);
+		distance = Mathf.SmoothDamp(distance, targetDistance, ref zoomVelocity, 0.5f);
 
+		Vector3 position = rotation * new Vector3(0.0f, 0.0f, -distance) + pivot.position + pivotOffset;
+		transform.rotation = rotation;
+		transform.position = position;
+	}
+		
 	private float ClampAngle(float angle, float min, float max)
 	{
 		if (angle < -360) angle += 360;
