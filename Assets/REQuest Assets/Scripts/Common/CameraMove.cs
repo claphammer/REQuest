@@ -8,27 +8,25 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-	public float speed = 10f;
+	public float speed = 2f;
 	public Transform target;			// target to follow (cam is fixed to following this around till it is NULL)
 	public bool followTarget = true;	// follow the target? (only if target is not NULL)
-	public bool allowInput = true;		// the cam wont read keyinput if set to false
 	public Transform camTr;
-	public Vector2 min_xz;
-	public Vector2 max_xz;
 	private Transform tr;
 
 	void Start()
 	{
 		tr = this.transform;
-		if (target && followTarget) tr.position = target.position;
-		
-	
-		
+		if (target && followTarget) 
+		{
+			tr.position = target.position;
+			tr.rotation = target.rotation;
+		}
 	}
 
 	void Update()
 	{
-		
+
 	}
 
 	void LateUpdate()
@@ -37,6 +35,8 @@ public class CameraMove : MonoBehaviour
 		{
 			Vector3 difference = target.position - tr.position;
 			tr.position = Vector3.Slerp(tr.position, target.position, Time.deltaTime * Mathf.Clamp(difference.magnitude, 0f, 2f));
+			tr.rotation = Quaternion.Slerp(tr.rotation, target.rotation, Time.deltaTime * speed);									//wc
+			print("I love to rotate " + tr.rotation);
 		}
 	}
 

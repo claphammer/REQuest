@@ -13,6 +13,7 @@ public class GameController : TMNController
 	#region inspector properties
 
 	public CameraMove camMover;					// used to move camera around (like make it follow a transform)
+	public CameraOrbit camRotate;					// used to move camera around (like make it follow a transform)
 	public SelectionIndicator selectionMarker;	// used to indicate which unit is active/selected
 	public GameObject playerChar;				// SINGLE unit prefab	
 	public bool hideSelectorOnMove = true;		// hide the selection marker when a unit moves?
@@ -131,6 +132,7 @@ public class GameController : TMNController
 
 				// camera should follow the unit that is moving
 				camMover.Follow(selectedUnit.transform);			//CHECK HERE for camera rotation insertion?
+				
 				
 				//insert Bartle Launch Sequence if the turn# is EVEN and not 0
 				if(turnNumber != 0 && (turnNumber & 1) == 0)

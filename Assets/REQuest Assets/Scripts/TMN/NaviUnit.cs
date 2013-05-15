@@ -29,7 +29,8 @@ public class NaviUnit : MonoBehaviour
 	// callbacks for when unit completed a task  **  eventCode 1 = movement to node completed
 	public delegate void UnitEventDelegate(NaviUnit unit, int eventCode);
 	protected UnitEventDelegate onUnitEvent = null;
-	protected bool isMoving = false;					// unit is moving
+	//protected bool isMoving = false;					// unit is moving
+	public bool isMoving = false;					// unit is moving
 	protected Vector3 endPointToReach = new Vector3();	// where unit is trying to get to
 	protected Transform _tr;							// cached transform ..... (cached for what?  next move?)
 	protected TileNode[] followPath = null;				// path being followed
