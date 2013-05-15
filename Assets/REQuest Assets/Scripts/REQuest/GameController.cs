@@ -87,10 +87,10 @@ public class GameController : TMNController
 		{
 			this.HandleInput();  // check if player clicked on tiles
 		}
-	/*	if(allowInput == true)
+		if(allowInput == true)
 		{
 			this.UnitActivate();
-		}*/
+		}
 	}
 	
 	#endregion
