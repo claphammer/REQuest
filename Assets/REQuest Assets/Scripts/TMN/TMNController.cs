@@ -39,11 +39,14 @@ public abstract class TMNController : MonoBehaviour
 	
 	// ====================================================================================================================
 	
+	public void UnitActivate()
+	{
+		OnNaviUnitClick(_selectedUnitGo);  //*** call the unit click method passing it the already selected unit...Not the raycast listener
+	}
+	
 	//Call this every frame to handle input - For Tiles only now.
 	protected void HandleInput()
 	{
-		OnNaviUnitClick(_selectedUnitGo);  //*** call the unit click method passing it the already selected unit...Not the raycast listener
-
 		Ray ray = rayCam.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit, 500f, _rayMask))

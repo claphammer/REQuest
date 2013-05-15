@@ -58,6 +58,7 @@ public class GameController : TMNController
 			SpawnUnit(); // Call SpawnUnit function
 			allowInput = true;
 		}
+	
 	}
 	
 	private void SpawnUnit()
@@ -81,10 +82,14 @@ public class GameController : TMNController
 
 	public void Update()
 	{		
-		if (allowInput && state == State.Running)
+		if (allowInput == true && state == State.Running)
 		{
 			this.HandleInput();  // check if player clicked on tiles
 		}
+	/*	if(allowInput == true)
+		{
+			this.UnitActivate();
+		}*/
 	}
 	
 	#endregion
@@ -118,7 +123,7 @@ public class GameController : TMNController
 				// dont want the player clicking around while a unit is moving
 				allowInput = false;
 
-				// hide the node markers when unit is moving. Note that the unit is allready linked with
+				// hide the node markers when unit is moving. Note that the unit is already linked with
 				// the destination node by now. So use the cached node ref
 				if (hideMarkersOnMove) prevNode.ShowNeighbours(((Unit)selectedUnit).maxMoves, false);
 
@@ -178,20 +183,15 @@ public class GameController : TMNController
 		
 		// jump camera to the unit that was clicked on (is selected)
 		camMover.Follow(go.transform);
+		
+		selectedUnit = unit;
 
+		// move selector to the clicked unit to indicate it's selection
+		selectionMarker.Show(go.transform);
 
-			bool changeUnit = true;
+		// show the nodes that this unit can move to
+		selectedUnit.node.ShowNeighbours(selectedUnit.currMoves, selectedUnit.tileLevel, true, true);
 
-			if (changeUnit)
-			{
-				selectedUnit = unit;
-
-				// move selector to the clicked unit to indicate it's selection
-				selectionMarker.Show(go.transform);
-
-				// show the nodes that this unit can move to
-				selectedUnit.node.ShowNeighbours(selectedUnit.currMoves, selectedUnit.tileLevel, true, true);
-			}
 	}
 
 	#endregion
@@ -208,14 +208,10 @@ public class GameController : TMNController
 				// then they should be now as they are invalid now
 				prevNode.ShowNeighbours(((Unit)selectedUnit).maxMoves, false);
 			}
-
-			// do a fake click on the unit to "select" it again
-			//this.OnNaviUnitClick(unit.gameObject);
 			allowInput = true; // allow input again
 		}
 	}
 
 }
-
 	#endregion
 	// ====================================================================================================================
