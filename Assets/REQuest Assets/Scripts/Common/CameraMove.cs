@@ -8,16 +8,15 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-	public float speed = 2f;
-	public Transform target;			// target to follow (cam is fixed to following this around till it is NULL)
-	public bool followTarget = true;	// follow the target? (only if target is not NULL)
-	public Transform camTr;
-	private Transform tr;
+	public float speed = .5f;
+	public Transform target;			// target to follow (make this the player)
+	public Transform camTr;				// main camera to bind to target
+	private Transform tr;				// for storing the current Pivot GameObject transforms
 
 	void Start()
 	{
 		tr = this.transform;
-		if (target && followTarget) 
+		if (target)
 		{
 			tr.position = target.position;
 			tr.rotation = target.rotation;
@@ -31,7 +30,7 @@ public class CameraMove : MonoBehaviour
 
 	void LateUpdate()
 	{
-		if (target && followTarget)
+		if (target)
 		{
 			Vector3 difference = target.position - tr.position;
 			tr.position = Vector3.Slerp(tr.position, target.position, Time.deltaTime * Mathf.Clamp(difference.magnitude, 0f, 2f));
@@ -39,15 +38,9 @@ public class CameraMove : MonoBehaviour
 		}
 	}
 
-	public void Follow(bool doFollowCurrentTarget)
-	{
-		followTarget = doFollowCurrentTarget;
-	}
-
 	public void Follow(Transform t)
 	{
 		target = t;
-		followTarget = true;
 	}
 
 	// ====================================================================================================================
