@@ -7,7 +7,7 @@ using System.Collections;
 
 public class MMDirIndicator : MonoBehaviour
 {
-	public float speed = .5f;
+	public float speed = 5f;
 	public Transform target;			// target to follow (make this the player)
 	public Vector3 yOffset = Vector3.zero;		// offset from target's pivot
 	public Transform camTr;				// main camera to bind to target
@@ -23,7 +23,7 @@ public class MMDirIndicator : MonoBehaviour
 		}
 	}
 
-	void LateUpdate()
+	void Update()
 	{
 		if (target)
 		{
