@@ -83,14 +83,16 @@ public class GameController : TMNController
 
 	public void Update()
 	{		
-		if (allowInput == true && state == State.Running)
-		{
-			this.HandleInput();  // check if player clicked on tiles
-		}
 		if(allowInput == true)
+		{
+			this.HandleInput();  //check if player clicked on tiles
+		}
+		if(allowInput == true && (Time.frameCount & 80) == 0)
 		{
 			this.UnitActivate();
 		}
+		//Debug.Log(Time.time);
+		Debug.Log(Time.frameCount);
 	}
 	
 	#endregion
@@ -101,7 +103,7 @@ public class GameController : TMNController
 		//Check if currMoves = 0. If not: roll die and update
 		if(selectedUnit.currMoves != 0)
 		{
-								//do nothing
+			//do nothing
 		}
 		else
 		{

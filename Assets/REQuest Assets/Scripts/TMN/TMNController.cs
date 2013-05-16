@@ -38,7 +38,7 @@ public abstract class TMNController : MonoBehaviour
 	}
 	
 	// ====================================================================================================================
-	
+
 	public void UnitActivate()
 	{
 		OnNaviUnitClick(_selectedUnitGo);  //*** call the unit click method passing it the already selected unit...Not the raycast listener
