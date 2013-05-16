@@ -3,11 +3,13 @@
 // ====================================================================================================================
 
 using UnityEngine;
+using System.Collections;
 
-public class CameraMove : MonoBehaviour
+public class MMDirIndicator : MonoBehaviour
 {
 	public float speed = .5f;
 	public Transform target;			// target to follow (make this the player)
+	public Vector3 yOffset = Vector3.zero;		// offset from target's pivot
 	public Transform camTr;				// main camera to bind to target
 	private Transform tr;				// for storing the current Pivot GameObject transforms
 
@@ -16,7 +18,7 @@ public class CameraMove : MonoBehaviour
 		tr = this.transform;
 		if (target)
 		{
-			tr.position = target.position;
+			tr.position = target.position + yOffset;
 			tr.rotation = target.rotation;
 		}
 	}
@@ -25,16 +27,13 @@ public class CameraMove : MonoBehaviour
 	{
 		if (target)
 		{
-			Vector3 difference = target.position - tr.position;
-			tr.position = Vector3.Slerp(tr.position, target.position, Time.deltaTime * Mathf.Clamp(difference.magnitude, 0f, 2f));
-			tr.rotation = Quaternion.Slerp(tr.rotation, target.rotation, Time.deltaTime * speed);									//wc
+
+			tr.position = target.position + yOffset;
+			tr.rotation = Quaternion.Slerp(tr.rotation, target.rotation, Time.deltaTime * speed);
 		}
 	}
 
-	public void Follow(Transform t)
-	{
-		target = t;
-	}
 
 	// ====================================================================================================================
 }
+

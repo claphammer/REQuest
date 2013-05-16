@@ -1,5 +1,4 @@
 // ====================================================================================================================
-// 
 // Created by Leslie Young
 // http://www.plyoung.com/ or http://plyoung.wordpress.com/
 // ====================================================================================================================
@@ -87,7 +86,7 @@ public abstract class TMNController : MonoBehaviour
 	public virtual void OnNaviUnitClick(GameObject unitGo)
 	{
 		_selectedUnitGo = unitGo;
-		print("NaviUnitClick says i am: " + _selectedUnitGo);
+		//print("NaviUnitClick says i am: " + _selectedUnitGo);
 	}
 	// ====================================================================================================================
 }
