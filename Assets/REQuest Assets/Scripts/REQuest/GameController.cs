@@ -92,7 +92,7 @@ public class GameController : TMNController
 			this.UnitActivate();
 		}
 		//Debug.Log(Time.time);
-		Debug.Log(Time.frameCount);
+		//Debug.Log(Time.frameCount);
 	}
 	
 	#endregion

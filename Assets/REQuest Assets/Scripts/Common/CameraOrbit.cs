@@ -15,9 +15,9 @@ public class CameraOrbit : MonoBehaviour
 	//private bool gameBusy = false;
 
 
-	public float distance = 6f; // CURR distance from target (used with zoom)
-	public float minDistance = 2f; // MIN distance from target (used with zoom)
-	public float maxDistance = 15f; // MAX distance from target (used with zoom)
+	public float distance = 6f;		// CURR distance from target (used with zoom)
+	public float minDistance = 2f;	// MIN distance from target (used with zoom)
+	public float maxDistance = 15f;	// MAX distance from target (used with zoom)
 	public float zoomSpeed = 1f; 
 
     public float xSpeed = 250.0f;
