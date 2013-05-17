@@ -10,6 +10,7 @@ public class CameraOrbit : MonoBehaviour
 {
     public Transform pivot;							// the object being followed
 	public Vector3 pivotOffset = Vector3.zero;		// offset from target's pivot
+
 	public float distance = 6f; 					// CURR distance from target (used with zoom)
 	public float minDistance = 2f; 					// MIN distance from target (used with zoom)
 	public float maxDistance = 15f; 				// MAX distance from target (used with zoom)
