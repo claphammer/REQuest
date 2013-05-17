@@ -11,13 +11,9 @@ public class CameraOrbit : MonoBehaviour
     public Transform pivot;							// the object being followed
 	public Vector3 pivotOffset = Vector3.zero;		// offset from target's pivot
 
-	//public GameController game;
-	//private bool gameBusy = false;
-
-
-	public float distance = 6f;		// CURR distance from target (used with zoom)
-	public float minDistance = 2f;	// MIN distance from target (used with zoom)
-	public float maxDistance = 15f;	// MAX distance from target (used with zoom)
+	public float distance = 6f; 					// CURR distance from target (used with zoom)
+	public float minDistance = 2f; 					// MIN distance from target (used with zoom)
+	public float maxDistance = 15f; 				// MAX distance from target (used with zoom)
 	public float zoomSpeed = 1f; 
 
     public float xSpeed = 250.0f;
@@ -36,6 +32,7 @@ public class CameraOrbit : MonoBehaviour
 	
 
 	private float pivX;
+	private float pivY;
 	private float targetX = 0f;
 	private float targetY = 0f;
 	private float targetDistance = 0f;
@@ -47,11 +44,11 @@ public class CameraOrbit : MonoBehaviour
     {
 
 		pivX = pivot.transform.eulerAngles.x;
+		pivY = pivot.transform.eulerAngles.y;
     	var angles = transform.eulerAngles;
 		targetX = x = angles.x;
 		targetY = y = ClampAngle(angles.y, yMinLimit, yMaxLimit);
 		targetDistance = distance;
-		//game = (GameController)GetComponent<GameController>();
 		CamBoundToPlayer();
     }
 	
@@ -65,7 +62,7 @@ public class CameraOrbit : MonoBehaviour
 			if (scroll > 0.0f) targetDistance -= zoomSpeed;
 			else if (scroll < 0.0f) targetDistance += zoomSpeed;
 			targetDistance = Mathf.Clamp(targetDistance, minDistance, maxDistance);
-			//ZoomToPlayer(); //wc
+			ZoomToPlayer(); 																	//wc
 			
 			// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 			
@@ -125,13 +122,14 @@ public class CameraOrbit : MonoBehaviour
 	
 	void ZoomToPlayer()
 	{
-		
-		x = pivX;
-		y = targetY;
-		Quaternion rotation = Quaternion.Euler(y, x, 0);
+		pivX = pivot.transform.eulerAngles.y;
+		pivY = pivot.transform.eulerAngles.x;
+		y = pivX;
+		x = pivY;
+		Quaternion rotation = Quaternion.Euler(x, y, 0);
 		distance = Mathf.SmoothDamp(distance, targetDistance, ref zoomVelocity, 0.5f);
 
-		Vector3 position = rotation * new Vector3(0.0f, 0.0f, -distance) + pivot.position + pivotOffset;
+		Vector3 position = rotation * new Vector3(0.0f, 1.5f, -distance) + pivot.position + pivotOffset;
 		transform.rotation = rotation;
 		transform.position = position;
 	}

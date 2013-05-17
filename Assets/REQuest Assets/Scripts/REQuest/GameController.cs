@@ -34,6 +34,7 @@ public class GameController : TMNController
 
 	public _BartleManager bartle;
 	private Dice dice;
+	private Vector3 playerRot;
 
 	#endregion
 	// ====================================================================================================================
@@ -87,12 +88,29 @@ public class GameController : TMNController
 		{
 			this.HandleInput();  //check if player clicked on tiles
 		}
+
 		if(allowInput == true && (Time.frameCount & 80) == 0)
 		{
 			this.UnitActivate();
 		}
-		//Debug.Log(Time.time);
-		//Debug.Log(Time.frameCount);
+		
+		if(allowInput == true)
+		{
+			this.UnitActivate();
+		}
+		
+		playerRot = selectedUnit.transform.rotation.eulerAngles;
+		print(playerRot.x);
+		print(playerRot.y);
+		print(playerRot.z);
+		
+	
+		if (allowInput)
+		{
+			if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A)) ManualPlayerRotateL();
+			if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.D)) ManualPlayerRotateR();
+		}
+
 	}
 	
 	#endregion
@@ -110,7 +128,29 @@ public class GameController : TMNController
 			dice.UpdateRoll();  //call the dice roll class --> it handles updating the selectedUnit.maxMoves
 		}
 	}
+	
+	public void ManualPlayerRotateL()
+	{
+		selectedUnit.transform.eulerAngles = new Vector3(playerRot.x, playerRot.y-60, playerRot.z);
+	}
+	
+	public void ManualPlayerRotateR()
+	{
+		selectedUnit.transform.eulerAngles = new Vector3(playerRot.x, playerRot.y+60, playerRot.z);
+	}
+	
+			//float x = selectedUnit.transform.eulerAngles.x;
+			//playerRot = playerRot-30;
+			//float z = selectedUnit.transform.eulerAngles.z;
+			
+			//Quaternion targetRot = Quaternion.Euler(x, playerRot, z);;
+			//selectedUnit.rotation = Quaternion.Slerp(selectedUnit.rotation, targetRot.rotation, Time.deltaTime * speed);
+		
+			//if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) { moved = true; Translate(Vector3.right * Time.deltaTime * speed); }
 
+		
+	
+	
 	// ====================================================================================================================
 	#region input handlers - click tile
 
