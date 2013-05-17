@@ -31,7 +31,8 @@ public class GUIManager : MonoBehaviour
 		//MiniMapWindow
 		if(isDrawnMM == true)
 			if(Event.current.type == EventType.Repaint)
-				Graphics.DrawTexture(new Rect(Screen.width - sizeMM - offsetMM, offsetMM, sizeMM, sizeMM), miniMapTexture, miniMapMaterial);
+				//Graphics.DrawTexture(new Rect(Screen.width - sizeMM - offsetMM, offsetMM, sizeMM, sizeMM), miniMapTexture, miniMapMaterial);
+				Graphics.DrawTexture(new Rect(Screen.width - sizeMM - offsetMM, Screen.height - sizeMM -offsetMM, sizeMM, sizeMM), miniMapTexture, miniMapMaterial);
 		
 		//DieRollWindow
 		if(isDrawnDR == true)
