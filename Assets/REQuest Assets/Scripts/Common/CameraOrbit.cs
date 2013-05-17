@@ -121,14 +121,14 @@ public class CameraOrbit : MonoBehaviour
 	
 	void ZoomToPlayer()
 	{
-		pivX = pivot.transform.eulerAngles.y;
-		pivY = pivot.transform.eulerAngles.x;
-		y = pivX;
-		x = pivY;
-		Quaternion rotation = Quaternion.Euler(x, y, 0);
+		pivX = pivot.transform.eulerAngles.y;					//get the pivot's Y rotation...call it pivX (rotating X around Y)
+		pivY = pivot.transform.eulerAngles.x;					//get the pivot's X rotation...call it pivY (rotating Y around X)
+		x = pivX;
+		y = targetY;
+		Quaternion rotation = Quaternion.Euler(y, x, 0);		//get the new rotation for the camera
 		distance = Mathf.SmoothDamp(distance, targetDistance, ref zoomVelocity, 0.5f);
 
-		Vector3 position = rotation * new Vector3(0.0f, 1.5f, -distance) + pivot.position + pivotOffset;
+		Vector3 position = rotation * new Vector3(0.0f, 0.25f, -distance) + pivot.position + pivotOffset;
 		transform.rotation = rotation;
 		transform.position = position;
 	}

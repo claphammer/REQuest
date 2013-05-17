@@ -19,6 +19,8 @@ public class GameController : TMNController
 	public bool hideSelectorOnMove = true;		// hide the selection marker when a unit moves?
 	public bool hideMarkersOnMove = true;		// hide the node markers when a unit moves?
 	
+
+	
 	#endregion
 	// ====================================================================================================================
 	#region vars
@@ -33,8 +35,11 @@ public class GameController : TMNController
 	public int turnNumber = 0;
 
 	public _BartleManager bartle;
+	private float speed = 10f;
 	private Dice dice;
 	private Vector3 playerRot;
+	private Vector3 targetRot;
+	private Transform temp;
 
 	#endregion
 	// ====================================================================================================================
@@ -48,7 +53,12 @@ public class GameController : TMNController
 		bartle = GetComponentInChildren<_BartleManager>();
 		bartle.ResetQuestions();
 		dice = GetComponent<Dice>();
-		
+		temp = selectedUnit.transform;
+		if (selectedUnit)
+		{
+			temp.position = selectedUnit.transform.position;
+			temp.rotation = selectedUnit.transform.rotation;
+		}
 		if(turnNumber == 0)
 		{
 			selectedUnit.maxMoves = 0;
@@ -95,11 +105,7 @@ public class GameController : TMNController
 		}
 		
 		playerRot = selectedUnit.transform.rotation.eulerAngles;
-		print(playerRot.x);
-		print(playerRot.y);
-		print(playerRot.z);
-		
-	
+
 		if (allowInput)
 		{
 			if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.A)) ManualPlayerRotateL();
@@ -131,19 +137,13 @@ public class GameController : TMNController
 	
 	public void ManualPlayerRotateR()
 	{
+		//targetRot = new Vector3(playerRot.x, playerRot.y+60, playerRot.z);
+		//Quaternion newRotation = Quaternion.Euler(playerRot.x, playerRot.y+60, playerRot.z);
+		//selectedUnit.transform.rotation = Quaternion.Slerp(selectedUnit.transform.rotation, newRotation, Time.deltaTime * speed);	
+		
 		selectedUnit.transform.eulerAngles = new Vector3(playerRot.x, playerRot.y+60, playerRot.z);
-	}
-	
-			//float x = selectedUnit.transform.eulerAngles.x;
-			//playerRot = playerRot-30;
-			//float z = selectedUnit.transform.eulerAngles.z;
-			
-			//Quaternion targetRot = Quaternion.Euler(x, playerRot, z);;
-			//selectedUnit.rotation = Quaternion.Slerp(selectedUnit.rotation, targetRot.rotation, Time.deltaTime * speed);
-		
-			//if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) { moved = true; Translate(Vector3.right * Time.deltaTime * speed); }
 
-		
+	}
 	
 	
 	// ====================================================================================================================
