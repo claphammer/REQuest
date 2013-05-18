@@ -40,8 +40,12 @@ public ParticleSystem particles;
     }
 	//GUI message controls.  Alter GUI information from on GUI - valid until GUI styles are implemented
 	void OnGUI () {
-		if (messageDelay == true){
-			GUI.Box(new Rect(Screen.width/2,Screen.height/2 - 50, 350, 50), "You Reached the Target! - A mini Game will soon live here.  ***  You can quit now or walk around and Finish the Bartle Test first");
+		if (messageDelay == true)
+		{
+			float w = 400;
+			float h = 300;
+			Rect rect = new Rect((Screen.width-w)/2, (Screen.height-h)/2 - 50, w, h);
+			GUI.Label(rect, "You Reached the Target! - A mini Game will soon live here.  ***  You can quit now or walk around and Finish the Bartle Test first");
 		}
 	}
 }

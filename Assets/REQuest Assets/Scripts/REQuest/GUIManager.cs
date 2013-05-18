@@ -18,7 +18,6 @@ public class GUIManager : MonoBehaviour
 	public float scoreSoc;
 	public float scoreKil;
 	
-	private float questionsRemaining = 30;
 	private float questionsAsked = 0;
 	private Inventory inv;
 	private QuestLog quest;
@@ -56,6 +55,18 @@ public class GUIManager : MonoBehaviour
 			}
 			Dice.Value(""); //instantiates the Value method to give back to the player		
 		}
+					
+		if (questionsAsked == 30)
+			{
+				float SocialTotal = ((scoreSoc/30)*2);
+				float AchieverTotal = ((scoreAch/30)*2);
+				float KillerTotal = ((scoreKil/30)*2);
+				float ExplorerTotal = ((scoreExp/30)*2);
+				float w = 400;
+				float h = 300;
+  				Rect rect = new  Rect((Screen.width-w)/2, (Screen.height-h)/2, w, h);
+		  		GUI.Label(rect, "Your Results are... Social: " + (SocialTotal).ToString() + ", Achiever: " + (AchieverTotal).ToString() + ", Killer: " + (KillerTotal).ToString() + ", Explorer: " + (ExplorerTotal).ToString() + " ... **Totals are out of 200%.  No single category will be over 100%**");
+			}
 		
 		
 		//Other Gui Window
@@ -103,8 +114,7 @@ public class GUIManager : MonoBehaviour
 			GUILayout.Label("Questions Answered: " + questionsAsked + "/30");
 			//GUILayout.Space(10f);
 			GUILayout.Label("Ach:" + (scoreAch).ToString() + "  Exp:" + (scoreExp).ToString() + "  Soc:" + (scoreSoc).ToString() + "  Kil:" + (scoreKil).ToString()); 
-
-
+			
 		}
 	}
 	
