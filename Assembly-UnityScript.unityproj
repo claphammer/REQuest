@@ -44,11 +44,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\BartleTest\scripts\BartleQuotient.js" />
-     <Compile Include="Assets\BartleTest\scripts\DemoScript.js" />
-     <Compile Include="Assets\BartleTest\scripts\ProximityExample.js" />
+     <Compile Include="Assets\REQuest Assets\Scripts\REQuest\Skorekeeper.js" />
      <None Include="Assets\REQuest Assets\Shaders\Projector Multiply.shader" />
-     <None Include="Assets\BartleTest\Resources\UI\Custom Fonts\300trojans\300trojans.txt" />
+     <None Include="Assets\REQuest Assets\Sources\UI\Custom Fonts\300trojans\300trojans.txt" />
      <None Include="Assets\REQuest Assets\Shaders\Projector Light.shader" />
      <None Include="Assets\REQuest Assets\Shaders\FX-Water Simple.shader" />
      <None Include="Assets\REQuest Assets\Skybox\README.txt" />

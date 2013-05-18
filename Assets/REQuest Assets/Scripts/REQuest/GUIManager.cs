@@ -18,6 +18,8 @@ public class GUIManager : MonoBehaviour
 	public float scoreSoc;
 	public float scoreKil;
 	
+	private float questionsRemaining = 30;
+	private float questionsAsked = 0;
 	private Inventory inv;
 	private QuestLog quest;
 	private GameController game;
@@ -32,7 +34,6 @@ public class GUIManager : MonoBehaviour
 		scoreExp = (float)DialogUI.GetTokenAsFloat("Explorer");  //ignore MONO COMPILE ERROR
 		scoreSoc = (float)DialogUI.GetTokenAsFloat("Socializer");  //ignore MONO COMPILE ERROR
 		scoreKil = (float)DialogUI.GetTokenAsFloat("Killer");  //ignore MONO COMPILE ERROR
-		
 	}
 
 	void OnGUI()
@@ -40,7 +41,7 @@ public class GUIManager : MonoBehaviour
 		//MiniMapWindow
 		if(isDrawnMM == true)
 			if(Event.current.type == EventType.Repaint)
-				//Graphics.DrawTexture(new Rect(Screen.width - sizeMM - offsetMM, offsetMM, sizeMM, sizeMM), miniMapTexture, miniMapMaterial);
+				//Graphics.DrawTexture(new Rect(Screen.width - sizeMM - offsetMM, offsetMM, sizeMM, sizeMM), miniMapTexture, miniMapMaterial); //Top Right
 				Graphics.DrawTexture(new Rect(Screen.width - sizeMM - offsetMM, Screen.height - sizeMM -offsetMM, sizeMM, sizeMM), miniMapTexture, miniMapMaterial);
 		
 		//DieRollWindow
@@ -85,18 +86,22 @@ public class GUIManager : MonoBehaviour
 
 			//Slot 4: Display Turn Number
 			GUILayout.Space(10f);
-			GUILayout.Label(string.Format("Turn# = " + game.turnNumber));
+			GUILayout.Label(string.Format("Turn # = " + game.turnNumber));
 		
 			//Slot 5: Moves Left (currMoves) Display
-			GUILayout.Space(10f);
-			GUILayout.Label(string.Format("Moves Left: "+ game.selectedUnit.currMoves));
+			//GUILayout.Space(10f);
+			GUILayout.Label(string.Format("Moves Left This Turn: "+ game.selectedUnit.currMoves));
 			
 			//Slot 6: Bartle
-			GUILayout.Space(10f);
+			
 			scoreAch = (float)DialogUI.GetTokenAsFloat("Achiever");
 			scoreExp = (float)DialogUI.GetTokenAsFloat("Explorer");
 			scoreSoc = (float)DialogUI.GetTokenAsFloat("Socializer");
 			scoreKil = (float)DialogUI.GetTokenAsFloat("Killer");
+			questionsAsked = (scoreAch + scoreExp + scoreSoc + scoreKil);
+			GUILayout.Space(10f);
+			GUILayout.Label("Questions Answered: " + questionsAsked + "/30");
+			//GUILayout.Space(10f);
 			GUILayout.Label("Ach:" + (scoreAch).ToString() + "  Exp:" + (scoreExp).ToString() + "  Soc:" + (scoreSoc).ToString() + "  Kil:" + (scoreKil).ToString()); 
 
 

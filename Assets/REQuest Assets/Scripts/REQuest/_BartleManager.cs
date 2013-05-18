@@ -7,7 +7,15 @@ public class _BartleManager : MonoBehaviour
     public List<GameObject> bQuestions = new List<GameObject>();  //original List:  populate in inspector
     private List<GameObject> questions = new List<GameObject>();  //transfer List for runtime
     public bool questionAsked = false;
+	private bool complete = false;
 	private int currQuestion = 0;
+	
+		private float SocialTotal;
+		private float AchieverTotal;
+		private float KillerTotal;
+		private float ExplorerTotal;
+	
+	
    
     public void ResetQuestions()
     {
@@ -30,7 +38,7 @@ public class _BartleManager : MonoBehaviour
         	if (newQuestion == null) 
 			{
         		Debug.Log("Out of Questions");
-         		return;
+         		BartleQuotient();
        		}
 		}
        	questionAsked = true;
@@ -53,4 +61,35 @@ public class _BartleManager : MonoBehaviour
 
         return go;
     }
+	
+	public void BartleQuotient()
+	{
+		float scoreAch = (float)DialogUI.GetTokenAsFloat("Achiever");  //ignore MONO COMPILE ERROR
+		float scoreExp = (float)DialogUI.GetTokenAsFloat("Explorer");  //ignore MONO COMPILE ERROR
+		float scoreSoc = (float)DialogUI.GetTokenAsFloat("Socializer");  //ignore MONO COMPILE ERROR
+		float scoreKil = (float)DialogUI.GetTokenAsFloat("Killer");  //ignore MONO COMPILE ERROR
+		
+		SocialTotal = ((scoreSoc/30)*2);
+		AchieverTotal = ((scoreAch/30)*2);
+		KillerTotal = ((scoreKil/30)*2);
+		ExplorerTotal = ((scoreExp/30)*2);
+		complete = true;
+	}
+		
+
+
+
+
+	public void OnGUI()
+	{
+	  	float w = 400;
+		float h = 300;
+  		Rect rect = new  Rect((Screen.width-w)/2, (Screen.height-h)/2, w, h);
+		
+		if (complete == true)
+		{
+		  GUI.Label(rect, "Your Results are... Social: " + (SocialTotal).ToString() + ", Achiever: " + (AchieverTotal).ToString() + ", Killer: " + (KillerTotal).ToString() + ", Explorer: " + (ExplorerTotal).ToString() + " ... **Totals are out of 200%.  No single category will be over 100%**");
+		}
+	}
+
 }
