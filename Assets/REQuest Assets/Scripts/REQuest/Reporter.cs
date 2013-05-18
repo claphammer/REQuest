@@ -9,13 +9,13 @@ public float score;
 	// Use this for initialization
 	void Start () 
 	{
-	//	score = (float)DialogUI.GetTokenAsFloat("Achiever");
+		score = (float)DialogUI.GetTokenAsFloat("Achiever");
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
-    //    score = (float)DialogUI.GetTokenAsFloat("Achiever");
+    	score = (float)DialogUI.GetTokenAsFloat("Achiever");
 	}
 	
 	void OnGUI ()
