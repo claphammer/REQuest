@@ -104,11 +104,6 @@ public class GameController : TMNController
 			this.UnitActivate();
 		}
 		
-		if(allowInput == true)
-		{
-			this.UnitActivate();
-		}
-		
 		playerRot = selectedUnit.transform.rotation.eulerAngles;
 
 		if (allowInput)
@@ -125,7 +120,7 @@ public class GameController : TMNController
 	public void ChangeTurn(bool changeTurn)  //cycle turn moves even for single player
 	{	
 		//Check if currMoves = 0. If not: roll die and update
-		if(selectedUnit.currMoves != 0)
+		if(selectedUnit.currMoves != 0)//> 7) Note:Disables need to move before rerolling
 		{
 			//do nothing
 		}
