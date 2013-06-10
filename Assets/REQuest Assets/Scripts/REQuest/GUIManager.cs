@@ -34,7 +34,7 @@ public class GUIManager : MonoBehaviour
 		scoreSoc = (float)DialogUI.GetTokenAsFloat("Socializer");  //ignore MONO COMPILE ERROR
 		scoreKil = (float)DialogUI.GetTokenAsFloat("Killer");  //ignore MONO COMPILE ERROR
 	}
-
+	
 	void OnGUI()
 	{
 		//MiniMapWindow
@@ -71,6 +71,17 @@ public class GUIManager : MonoBehaviour
 		
 		//Other Gui Window
 		winRect1 = GUILayout.Window(1, winRect1, DoMyWindow1, "RE-Quest Test GUI");
+		
+		//Right button
+		if(GUI.Button(new Rect (Screen.width - 1000,Screen.height - 200,180,20), "Turn right"))
+		{
+			game.ManualPlayerRotateR();
+		}
+		//Left button
+		if(GUI.Button(new Rect (Screen.width - 1200,Screen.height - 200,180,20), "Turn left"))
+		{
+			game.ManualPlayerRotateL();
+		}
 	}
 	
 	void DoMyWindow1(int windowID)

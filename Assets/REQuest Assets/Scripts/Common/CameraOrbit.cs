@@ -114,7 +114,7 @@ public class CameraOrbit : MonoBehaviour
    
    	 	if (Input.GetAxis("Mouse ScrollWheel") != 0) 
 			{
-        		Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
+        		//Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
         		distance -= Input.GetAxis("Mouse ScrollWheel") * mouseWheelDistanceRate;
 					distance = Mathf.Clamp(distance, minDistance, maxDistance);
         		height -= Input.GetAxis("Mouse ScrollWheel") * mouseWheelHeightRate;
