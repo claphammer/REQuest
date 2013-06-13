@@ -114,6 +114,10 @@ public class GUIManager : MonoBehaviour
 			//GUILayout.Space(10f);
 			GUILayout.Label(string.Format("Moves Left This Turn: "+ game.selectedUnit.currMoves));
 			
+			GUILayout.Space(10f);
+			if (GUILayout.Button("Return to Main Menu"))
+            	Application.LoadLevel("REQuestDemo_Menu");
+			
 			//Slot 6: Bartle
 			
 			scoreAch = (float)DialogUI.GetTokenAsFloat("Achiever");
