@@ -55,10 +55,6 @@
      <None Include="Assets\REQuest Assets\Skybox\README.txt" />
      <None Include="Assets\REQuest Assets\Shaders\MaskShader.shader" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-UnityScript-firstpass.unityproj">
-      <Project>{209255B2-F753-0FC2-C9A4-571597EEF2DA}</Project>      <Name>Assembly-UnityScript-firstpass</Name>    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	   Other similar extension points exist, see Microsoft.Common.targets.

@@ -54,9 +54,6 @@
      <None Include="Assets\REQuest Assets\Shaders\FX-Water Simple.shader" />
      <None Include="Assets\REQuest Assets\Skybox\README.txt" />
      <None Include="Assets\REQuest Assets\Shaders\MaskShader.shader" />
- <Reference Include="Library\ScriptAssemblies\Assembly-UnityScript-firstpass">
- <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
- </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
