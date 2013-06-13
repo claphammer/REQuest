@@ -73,12 +73,12 @@ public class GUIManager : MonoBehaviour
 		winRect1 = GUILayout.Window(1, winRect1, DoMyWindow1, "RE-Quest Test GUI");
 		
 		//Right button
-		if(GUI.Button(new Rect (Screen.width - 1000,Screen.height - 200,180,60), "Turn right"))
+		if(GUI.Button(new Rect (Screen.width - 450,Screen.height - 75,180,60), "Turn right"))
 		{
 			game.ManualPlayerRotateR();
 		}
 		//Left button
-		if(GUI.Button(new Rect (Screen.width - 1200,Screen.height - 200,180,60), "Turn left"))
+		if(GUI.Button(new Rect (Screen.width - 650,Screen.height - 75,180,60), "Turn left"))
 		{
 			game.ManualPlayerRotateL();
 		}
