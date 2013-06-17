@@ -53,9 +53,11 @@
      <None Include="Assets\REQuest Assets\Sources\UI\Custom Fonts\300trojans\300trojans.txt" />
      <None Include="Assets\Forest Grounds - Terrain Texture Pack\Readme.txt" />
      <None Include="Assets\REQuest Assets\Shaders\FX-Lava Simple.shader" />
+     <None Include="Assets\Nobiax Free Textures 04\readme.txt" />
      <None Include="Assets\REQuest Assets\Shaders\Projector Light.shader" />
      <None Include="Assets\REQuest Assets\Shaders\FX-Water Simple.shader" />
      <None Include="Assets\REQuest Assets\Skybox\README.txt" />
+     <None Include="Assets\REQuest Assets\Scenes\REQuestDemo02\BeastSettings.xml" />
      <None Include="Assets\REQuest Assets\Shaders\MaskShader.shader" />
   </ItemGroup>
   <ItemGroup>
