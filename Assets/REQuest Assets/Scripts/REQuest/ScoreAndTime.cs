@@ -6,6 +6,7 @@ public class ScoreAndTime : MonoBehaviour {
 	public int currentTime = 90;
 	public int totalScore = 0;
 	
+	//public GUIText scoreDisplay;
 	
 	void Start () {
 		InvokeRepeating("Countdown",1,1);
@@ -21,13 +22,13 @@ public class ScoreAndTime : MonoBehaviour {
 	
 	void Score (){
 		if(currentTime >= 90){
-			totalScore = currentTime*4;
+			totalScore = (currentTime*4);
 		}
 		if(currentTime >= 60){
-			totalScore = currentTime*3;
+			totalScore = (currentTime*3);
 		}
 		if(currentTime >= 30){
-			totalScore = totalScore+(currentTime*2);
+			totalScore = (currentTime*2);
 		}else{
 			totalScore = totalScore+currentTime;
 		}
@@ -35,7 +36,8 @@ public class ScoreAndTime : MonoBehaviour {
 	
 	void Update () {
 		//Debug.Log(currentTime);
-		Debug.Log(totalScore);
+		//Debug.Log(totalScore);
 		Score();
+		//scoreDisplay.text = "Score "+ totalScore;//.ToString();
 	}
 }

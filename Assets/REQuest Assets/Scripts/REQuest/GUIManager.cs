@@ -23,12 +23,15 @@ public class GUIManager : MonoBehaviour
 	private QuestLog quest;
 	private GameController game;
 	private Rect winRect1 = new Rect(10f, 10f, 200f, 80f);
+	private ScoreAndTime scoreTime;
 	
 	void Start()
 	{
 		game = GetComponent<GameController>();
 		inv = GetComponent<Inventory>();
 		quest = GetComponent<QuestLog>();
+		scoreTime = GetComponent<ScoreAndTime>();
+		
 		scoreAch = (float)DialogUI.GetTokenAsFloat("Achiever");  //ignore MONO COMPILE ERROR
 		scoreExp = (float)DialogUI.GetTokenAsFloat("Explorer");  //ignore MONO COMPILE ERROR
 		scoreSoc = (float)DialogUI.GetTokenAsFloat("Socializer");  //ignore MONO COMPILE ERROR
@@ -111,10 +114,18 @@ public class GUIManager : MonoBehaviour
 			GUILayout.Label(string.Format("Turn # = " + game.turnNumber));
 		
 			//Slot 5: Moves Left (currMoves) Display
-			//GUILayout.Space(10f);
+			GUILayout.Space(10f);
 			GUILayout.Label(string.Format("Moves Left This Turn: "+ game.selectedUnit.currMoves));
 			
-			//Slot 6: Bartle
+			//Slot 6: Score
+			GUILayout.Space(10f);
+			GUILayout.Label(string.Format("Score : "+scoreTime.totalScore));
+			
+			//Slot 7: Time
+			GUILayout.Space(10f);
+			GUILayout.Label(string.Format("Time left : "+scoreTime.currentTime));
+			
+			//Slot 8: Bartle
 			
 			scoreAch = (float)DialogUI.GetTokenAsFloat("Achiever");
 			scoreExp = (float)DialogUI.GetTokenAsFloat("Explorer");
