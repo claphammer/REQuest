@@ -50,15 +50,24 @@
      <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogScenes.js" />
      <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogScreen.js" />
      <Compile Include="Assets\Plugins\Black Zombie\Localized Dialogs\Scripts\DialogUI.js" />
+     <None Include="Assets\REQuest Assets\Music\Discovery\Discovery_ReadMe.txt" />
      <None Include="Assets\REQuest Assets\Shaders\Projector Multiply.shader" />
      <None Include="Assets\Destroyed_city_FREE\Destroyed_city_FREE_Info.txt" />
+     <None Include="Assets\readme.txt" />
+     <None Include="Assets\Shader\DifBumpSpecTransp.shader" />
      <None Include="Assets\REQuest Assets\Sources\UI\Custom Fonts\300trojans\300trojans.txt" />
-     <None Include="Assets\Forest Grounds - Terrain Texture Pack\Readme.txt" />
+     <None Include="Assets\REQuest Assets\Buildings\Sculptures\readme.txt" />
      <None Include="Assets\REQuest Assets\Shaders\FX-Lava Simple.shader" />
+     <None Include="Assets\SpartanKing\animations.txt" />
+     <None Include="Assets\Necromancer GUI\Kingthings.txt" />
      <None Include="Assets\REQuest Assets\Shaders\Projector Light.shader" />
      <None Include="Assets\REQuest Assets\Shaders\FX-Water Simple.shader" />
      <None Include="Assets\REQuest Assets\Skybox\README.txt" />
+     <None Include="Assets\Necromancer GUI\Readme.txt" />
+     <None Include="Assets\REQuest Assets\Music\This Is Now\This_Is_Now_ReadMe.txt" />
+     <None Include="Assets\Standard Assets\shader\DifBumpSpecTransp.shader" />
      <None Include="Assets\Destroyed_city_FREE\Shaders\AlphaTest-DiffuseDoubleSide.shader" />
+     <None Include="Assets\Shader\DiffSpecNormal.shader" />
      <None Include="Assets\REQuest Assets\Shaders\MaskShader.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -77,7 +77,8 @@ public class GameController : TMNController
 	{
 		//set Player Starting node to node 478
 		TileNode node = map[478];
-		//TileNode node = map[5894];
+		//TileNode node = map[4100];
+
 		
 		// spawn the unit
 		Unit unit = (Unit)Unit.SpawnUnit(playerChar.gameObject, map, node);
