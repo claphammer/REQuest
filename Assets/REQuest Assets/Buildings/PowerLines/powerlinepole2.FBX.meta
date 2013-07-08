@@ -1,0 +1,85 @@
+fileFormatVersion: 2
+guid: 1c5526ec4d2844eb5ab92e4c35820fce
+labels:
+- Africa
+- Pylon
+- Electric
+ModelImporter:
+  fileIDToRecycleName:
+    2800000: __AssetImporterPreview
+    4300000: polySurface3
+    4300002: polySurface4
+    4300004: polySurface5
+    4300006: polySurface6
+    4300008: polySurface7
+    4300010: polySurface8
+    4300012: polySurface12
+    4300014: polySurface13
+    4300016: polySurface14
+    4300018: polySurface17
+    4300020: polySurface18
+    4300022: polySurface19
+    4300024: polySurface20
+    4300026: polySurface23
+    4300028: polySurface29
+    4300030: polySurface30
+    4300032: polySurface31
+    4300034: polySurface42
+    4300036: polySurface43
+    4300038: polySurface44
+    4300040: polySurface45
+    4300042: polySurface48
+    4300044: pCylinder1
+    4300046: polySurface50
+    4300048: powerlinepole2
+    100100000: DataTemplate __Singleton__
+  serializedVersion: 10
+  materials:
+    importMaterials: 1
+    materialName: 3
+    materialSearch: 1
+  animations:
+    generateAnimations: 0
+    bakeSimulation: 0
+    splitAnimations: 1
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations: []
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMesh: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 0
+    normalImportMode: 0
+    tangentImportMode: 1
+  textMetaNamesToFileIDs:
+    //RootNode:
+      data:
+        first: 1
+        second: ae860100
+      data:
+        first: 4
+        second: 8e1a0600
+      data:
+        first: 23
+        second: 60182300
+      data:
+        first: 33
+        second: a05a3200
+      data:
+        first: 64
+        second: 00a86100

@@ -4,7 +4,7 @@ using System.Collections;
 public class Trigger_Finale : MonoBehaviour {
 	
 public static int trig2 = 0; //When changed to 1 sends message to inventory to activate object
-public bool messageDelay = false; //true activates message popup coroutine. false means trigger is idle
+public bool messageDelay = true; //true activates message popup coroutine. false means trigger is idle
 public ParticleSystem particles;
 
 	
@@ -14,16 +14,21 @@ public ParticleSystem particles;
 		
 	//Detects collision and starts coroutine. Can only be activated once.
 	void OnTriggerEnter(Collider Player) {
-		if(trig2 == 0){
+		if(trig2 == 0)
+		{
 		trig2 = 1;
-		Debug.Log("Triggered "+trig2);
+		Debug.Log("Trigger Finale "+trig2);
 			
 		audio.Play();	
-			particleEmitter.enabled = true;
+		//particleEmitter.enabled = true;
 			
 			
 		StartCoroutine(Wait(10.0F));
-		}else{
+			
+		//Time.timeScale = 0;
+		}
+		else
+		{
 		trig2 = 1;
 		}
     }
@@ -35,8 +40,14 @@ public ParticleSystem particles;
     }
 	//GUI message controls.  Alter GUI information from on GUI - valid until GUI styles are implemented
 	void OnGUI () {
-		if (messageDelay == true){
-			GUI.Box(new Rect(Screen.width/2,Screen.height/2, 300, 50), "You Finished the Demo! Um, hooray! or something.");
+		if (messageDelay == true)
+		{
+			float w = 400;
+			float h = 300;
+			Rect rect = new Rect((Screen.width-w)/2, (Screen.height-h)/2 - 50, w, h);
+			GUI.Label(rect, "You Reached the Target! - A mini Game will soon live here.  ***  You can quit now or you can walk around and finish the Bartle Test");
+			if (GUI.Button(new Rect((Screen.width-w)/2, (Screen.height-h)/2 - 150, 350, 30), "Back to Main Menu"))
+            	Application.LoadLevel("REQuestDemo_Menu");
 		}
 	}
 }

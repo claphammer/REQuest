@@ -16,7 +16,7 @@ public bool messageDelay = false; //true activates message popup coroutine. fals
 	void OnTriggerEnter(Collider Player) {
 		if(trig1 == 0){
 		trig1 = 1;
-		Debug.Log("Triggered "+trig1);
+		Debug.Log("Triggered Dice Pick-up "+trig1);
 			
 		audio.Play();	
 			
